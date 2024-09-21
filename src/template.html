@@ -6,6 +6,34 @@
     <title>Document</title>
 </head>
 <body>
+
+    <dialog id="newTaskModal">
+        <form action="" id="newTaskForm">
+            <h2>Create New Task</h2>
+            <div>
+                <label for="taskName">Name</label>
+                <input type="text" name="task_name" id="taskName">
+            </div>
+            <div>
+                <label for="taskDescription">Description</label>
+                <input type="text" name="task_description" id="taskDescription">
+            </div>
+            <div>
+                <label for="taskDueDate">Due Date</label>
+                <input type="date" name="task_due_date" id="taskDueDate">
+            </div>
+            <div>
+                <label for="taskPriority">Set Priority</label>
+                <select name="taskPriority" id="taskPriority">
+                    <option value="high">High</option>
+                    <option value="moderate">moderate</option>
+                    <option value="low">Low</option>
+                </select>
+            </div>
+            <button>Submit</button>
+        </form>
+    </dialog>
+
     <div id="sidebar">
         <div class="logo">Logo</div>
         <button class="completedBtn">Completed</button>
