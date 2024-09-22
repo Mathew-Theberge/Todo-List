@@ -1,9 +1,14 @@
-import {createTaskObj} from "./create-new-task"
+import {createTaskObj} from "./create-new-task.js"
 
 export const newTaskBtn = document.querySelector(".newTaskBtn")
 export const newTaskModal = document.querySelector("#newTaskModal")
 export const newTaskForm = document.querySelector("#newTaskForm")
 export const content = document.querySelector("#content")
+
+function closeModal(modal, form) {
+    modal.close()
+    form.reset()
+}
 
 export function renderTaskObj(e) {
     e.preventDefault()
@@ -37,12 +42,16 @@ export function renderTaskObj(e) {
             break
     }
 
+    // event listeners for the interactive parts of the task
+
+    deleteBtn.addEventListener("click", () => taskCard.remove())
+
     container.append(name, description, dueDate)
     taskCard.append(radio, container, deleteBtn)
     content.append(taskCard)
 
-    newTaskModal.close()
-    newTaskForm.reset()
+    closeModal(newTaskModal, newTaskForm)
+    console.log(taskObj)
 }
 
 export function closeModalOnOutsideClick(e) {
