@@ -1,4 +1,5 @@
 import "./style.css"
+import { displayCurrentProject, setCurrentProject } from "./project-logic.js"
 import {
     newTaskBtn,
     newTaskForm,
@@ -12,18 +13,33 @@ import {
     taskCancelBtn,
     newProjectBtn,
     exitModal,
+    renderProjectBtns,
+    allTasksBtn, 
 } from "./DOM-manipulation.js"
 
-export let currentProject = allTasksElement
+export let currentProjectObj = {currentProject: allTasksElement}
+
+displayCurrentProject(allTasksElement)
+
+allTasksBtn.addEventListener("click", () => {
+    setCurrentProject(allTasksElement)
+    displayCurrentProject(allTasksElement)
+})
 
 newTaskBtn.addEventListener("click", () => newTaskModal.showModal())
 newTaskModal.addEventListener("click", (e) => closeModalOnOutsideClick(e, newTaskModal, newTaskForm))
 taskCancelBtn.addEventListener("click", () => exitModal(newTaskModal, newTaskForm))
 
 newProjectBtn.addEventListener("click", () => newProjectModal.showModal())
-newProjectModal.addEventListener("click", (e) => closeModalOnOutsideClick(e, newProjectModal, newProjectForm))
+newProjectModal.addEventListener("click", (e) => {
+    setTimeout( () => closeModalOnOutsideClick(e, newProjectModal, newProjectForm), 5)
+})
 projectCancelBtn.addEventListener("click", () => exitModal(newProjectModal, newProjectForm))
 
 newTaskForm.addEventListener("submit", (e) => {
-    renderTaskObj(e, currentProject)
+    renderTaskObj(e, currentProjectObj)
+})
+
+newProjectForm.addEventListener("submit", (e) => {
+    renderProjectBtns(e)
 })

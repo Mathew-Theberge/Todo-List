@@ -1,4 +1,5 @@
 import {createTaskObj} from "./create-new-task.js"
+import { createProjectObj, displayCurrentProject, setCurrentProject} from "./project-logic.js"
 
 export const newTaskBtn = document.querySelector(".newTaskBtn")
 export const newTaskModal = document.querySelector("#newTaskModal")
@@ -11,6 +12,7 @@ export const newProjectForm = document.querySelector("#newProjectForm")
 export const taskCancelBtn = document.querySelector(".taskCancelBtn")
 export const projectCancelBtn = document.querySelector(".projectCancelBtn")
 export const newProjectBtn = document.querySelector(".newProjectBtn")
+export const sidebar = document.querySelector("#sidebar")
 
 export function exitModal(modal, form) {
     modal.close()
@@ -49,16 +51,72 @@ export function renderTaskObj(e, project) {
             break
     }
 
-    // event listeners for the interactive parts of the task
-
-    deleteBtn.addEventListener("click", () => taskCard.remove())
-
     container.append(name, description, dueDate)
     taskCard.append(radio, container, deleteBtn)
-    project.append(taskCard)
+    const clone = taskCard.cloneNode(true)
+    allTasksElement.append(clone)
+    if (project.currentProject !== allTasksElement) {
+        project.currentProject.append(taskCard)
+    }
+
+    // event listeners for the interactive parts of the task
+
+    deleteBtn.addEventListener("click", () => {
+        clone.remove()
+        taskCard.remove()
+    })
+    clone.addEventListener("click",() => {
+        clone.remove()
+        taskCard.remove()
+    })
 
     exitModal(newTaskModal, newTaskForm)
-    console.log(taskObj)
+}
+
+export function renderProjectBtns(e) {
+    e.preventDefault()
+    const project = createProjectObj()
+
+    const container = document.createElement("div")
+    const projectBtn = document.createElement("button")
+    const deleteBtn = document.createElement("button")
+    const projectElement = document.createElement("div")
+
+    projectBtn.textContent = project.name
+    deleteBtn.textContent = "X"
+    projectElement.classList.add(`${project.name}`)
+
+    container.append(projectBtn, deleteBtn)
+    sidebar.append(container)
+    content.append(projectElement)
+
+    // event listener logic
+
+    deleteBtn.addEventListener("click", () => {
+        container.remove()
+
+        // this code is here to make sure if a project list is deleted
+        // all of the todos / tasks that belong to that project
+        // also get deleted in the all Tasks folder
+        const projectElementChildren = Array.from(projectElement.children)
+        const allTasksElementChildren = Array.from(allTasksElement.children)
+        projectElementChildren.forEach( (element) => {
+            allTasksElementChildren.forEach((element2) => {
+                if(element.isEqualNode(element2)) {
+                    element2.remove()
+                }
+            })
+        })
+
+        projectElement.remove()
+    })
+
+    projectBtn.addEventListener("click", () => {
+        setCurrentProject(projectElement)
+        displayCurrentProject(projectElement)
+    })
+
+    exitModal(newProjectModal, newProjectForm)
 }
 
 export function closeModalOnOutsideClick(e, modal, form) {
