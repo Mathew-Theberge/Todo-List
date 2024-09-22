@@ -4,14 +4,15 @@ export const newTaskBtn = document.querySelector(".newTaskBtn")
 export const newTaskModal = document.querySelector("#newTaskModal")
 export const newTaskForm = document.querySelector("#newTaskForm")
 export const content = document.querySelector("#content")
+export const allTasksBtn = document.querySelector(".allTasksBtn")
+export const allTasksElement = document.querySelector(".allTasks")
 
 function closeModal(modal, form) {
     modal.close()
     form.reset()
 }
 
-export function renderTaskObj(e) {
-    e.preventDefault()
+export function renderTaskObj(project) {
     const taskObj = createTaskObj()
 
     const taskCard = document.createElement("div")
@@ -48,7 +49,7 @@ export function renderTaskObj(e) {
 
     container.append(name, description, dueDate)
     taskCard.append(radio, container, deleteBtn)
-    content.append(taskCard)
+    project.append(taskCard)
 
     closeModal(newTaskModal, newTaskForm)
     console.log(taskObj)
