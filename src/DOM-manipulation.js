@@ -6,13 +6,19 @@ export const newTaskForm = document.querySelector("#newTaskForm")
 export const content = document.querySelector("#content")
 export const allTasksBtn = document.querySelector(".allTasksBtn")
 export const allTasksElement = document.querySelector(".allTasks")
+export const newProjectModal = document.querySelector("#newProjectModal")
+export const newProjectForm = document.querySelector("#newProjectForm")
+export const taskCancelBtn = document.querySelector(".taskCancelBtn")
+export const projectCancelBtn = document.querySelector(".projectCancelBtn")
+export const newProjectBtn = document.querySelector(".newProjectBtn")
 
-function closeModal(modal, form) {
+export function exitModal(modal, form) {
     modal.close()
     form.reset()
 }
 
-export function renderTaskObj(project) {
+export function renderTaskObj(e, project) {
+    e.preventDefault()
     const taskObj = createTaskObj()
 
     const taskCard = document.createElement("div")
@@ -51,20 +57,20 @@ export function renderTaskObj(project) {
     taskCard.append(radio, container, deleteBtn)
     project.append(taskCard)
 
-    closeModal(newTaskModal, newTaskForm)
+    exitModal(newTaskModal, newTaskForm)
     console.log(taskObj)
 }
 
-export function closeModalOnOutsideClick(e) {
-    const dialogDimensions = newTaskModal.getBoundingClientRect()
+export function closeModalOnOutsideClick(e, modal, form) {
+    const dialogDimensions = modal.getBoundingClientRect()
     if (
       e.clientX < dialogDimensions.left ||
       e.clientX > dialogDimensions.right ||
       e.clientY < dialogDimensions.top ||
       e.clientY > dialogDimensions.bottom
     ) {
-    newTaskModal.close()
-    newTaskForm.reset()
+    exitModal(modal, form)
     }
 }
+
 

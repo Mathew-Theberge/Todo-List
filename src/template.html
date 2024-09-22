@@ -11,7 +11,7 @@
         <form action="" id="newTaskForm">
             <h2>Create New Task</h2>
             <div>
-                <label for="taskName">Name</label>
+                <label for="taskName">Task Name</label>
                 <input type="text" name="task_name" id="taskName">
             </div>
             <div>
@@ -31,6 +31,19 @@
                 </select>
             </div>
             <button>Submit</button>
+            <button type="button" class="taskCancelBtn">Cancel</button>
+        </form>
+    </dialog>
+
+    <dialog id="newProjectModal">
+        <form action="" id="newProjectForm">
+            <h2>Create New Project</h2>
+            <div>
+                <label for="projectName">Project Name</label>
+                <input type="text" name="project_name" id="projectName">
+            </div>
+            <button>Submit</button>
+            <button type="button" class="projectCancelBtn">Cancel</button>
         </form>
     </dialog>
 
