@@ -15,6 +15,8 @@ import {
     exitModal,
     renderProjectBtns,
     allTasksBtn, 
+    completedBtn,
+    completedBtnElement
 } from "./DOM-manipulation.js"
 
 export let currentProjectObj = {currentProject: allTasksElement}
@@ -26,7 +28,16 @@ allTasksBtn.addEventListener("click", () => {
     displayCurrentProject(allTasksElement)
 })
 
-newTaskBtn.addEventListener("click", () => newTaskModal.showModal())
+completedBtn.addEventListener("click", () => {
+    setCurrentProject(completedBtnElement)
+    displayCurrentProject(completedBtnElement)
+})
+
+newTaskBtn.addEventListener("click", () => {
+    if(currentProjectObj.currentProject !== completedBtnElement) {
+        newTaskModal.showModal()
+    }
+})
 newTaskModal.addEventListener("click", (e) => closeModalOnOutsideClick(e, newTaskModal, newTaskForm))
 taskCancelBtn.addEventListener("click", () => exitModal(newTaskModal, newTaskForm))
 

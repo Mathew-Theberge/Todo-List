@@ -1,4 +1,5 @@
 import {createTaskObj} from "./create-new-task.js"
+import { currentProjectObj } from "./index.js"
 import { createProjectObj, displayCurrentProject, setCurrentProject} from "./project-logic.js"
 
 export const newTaskBtn = document.querySelector(".newTaskBtn")
@@ -13,6 +14,9 @@ export const taskCancelBtn = document.querySelector(".taskCancelBtn")
 export const projectCancelBtn = document.querySelector(".projectCancelBtn")
 export const newProjectBtn = document.querySelector(".newProjectBtn")
 export const sidebar = document.querySelector("#sidebar")
+export const completedBtn = document.querySelector(".completedBtn")
+export const completedBtnElement = document.querySelector(".completedBtnElement")
+
 
 export function exitModal(modal, form) {
     modal.close()
@@ -65,9 +69,23 @@ export function renderTaskObj(e, project) {
         clone.remove()
         taskCard.remove()
     })
-    clone.addEventListener("click",() => {
+    clone.lastChild.addEventListener("click",() => {
         clone.remove()
         taskCard.remove()
+    })
+
+    radio.addEventListener("click", () => {
+        if (currentProjectObj.currentProject !== completedBtnElement) {
+            completedBtnElement.append(taskCard)
+            clone.remove()
+        }
+    })
+
+    clone.firstChild.addEventListener("click", () => {
+        if (currentProjectObj.currentProject !== completedBtnElement) {
+            completedBtnElement.append(clone)
+            taskCard.remove()
+        }
     })
 
     exitModal(newTaskModal, newTaskForm)
