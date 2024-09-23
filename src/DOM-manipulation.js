@@ -16,6 +16,7 @@ export const newProjectBtn = document.querySelector(".newProjectBtn")
 export const sidebar = document.querySelector("#sidebar")
 export const completedBtn = document.querySelector(".completedBtn")
 export const completedBtnElement = document.querySelector(".completedBtnElement")
+export const projectName = document.querySelector(".projectName")
 
 
 export function exitModal(modal, form) {
@@ -102,7 +103,8 @@ export function renderProjectBtns(e) {
 
     projectBtn.textContent = project.name
     deleteBtn.textContent = "X"
-    projectElement.classList.add(`${project.name}`)
+    const removedSpaces = project.name.replace(/ /g, "")
+    projectElement.classList.add(`${removedSpaces}`)
 
     container.append(projectBtn, deleteBtn)
     sidebar.append(container)
@@ -132,6 +134,7 @@ export function renderProjectBtns(e) {
     projectBtn.addEventListener("click", () => {
         setCurrentProject(projectElement)
         displayCurrentProject(projectElement)
+        projectName.textContent = project.name
     })
 
     exitModal(newProjectModal, newProjectForm)

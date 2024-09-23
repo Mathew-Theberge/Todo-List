@@ -1,4 +1,4 @@
-import {newProjectForm, content} from "./DOM-manipulation.js"
+import {newProjectForm, content, projectName, completedBtnElement, allTasksElement} from "./DOM-manipulation.js"
 import { currentProjectObj } from "./index.js"
 
 export function setCurrentProject(project) {
@@ -10,6 +10,11 @@ export function displayCurrentProject(projectElement) {
     contentChildren.forEach((element) => element.classList.add("hide"))
     projectElement.classList.remove("hide")
     contentChildren[0].classList.remove("hide")
+    if (projectElement === completedBtnElement) {
+        projectName.textContent = "Completed Tasks"
+    } else if (projectElement === allTasksElement) {
+        projectName.textContent = "All Tasks"
+    }
 }
 
 class Project {
