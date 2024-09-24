@@ -1,4 +1,5 @@
 import {newTaskForm} from "./DOM-manipulation.js"
+import { updateStorage } from "./index.js"
 
 export const allTasksArray = []
 
@@ -36,6 +37,7 @@ class Task {
     )
     allTasksArray.push(task)
     updateTaskIds()
+    updateStorage()
   }
 
 

@@ -1,5 +1,5 @@
 import "./style.css"
-import {createTaskObj} from "./task-logic.js"
+import {allTasksArray, createTaskObj} from "./task-logic.js"
 import {
     newTaskBtn,
     newTaskForm,
@@ -16,11 +16,32 @@ import {
     completedBtn,
     updateDisplay,
     displayCompletedFolder,
-    displayAllTasksFolder
+    displayAllTasksFolder,
+    displayCurrentFolder,
 } from "./DOM-manipulation.js"
+import { allFoldersArray } from "./folder-logic.js"
+if (localStorage.length === 0) {
+    renderFolderBtns(true)
+    updateStorage()
+} else {
+    const deserializedFolder = JSON.parse(localStorage.getItem("folderArray"))
+    deserializedFolder.forEach( object => {
+        allFoldersArray.push(object)
+    })
 
-renderFolderBtns(true)
+    const deserializedTasks = JSON.parse(localStorage.getItem("taskArray"))
+    deserializedTasks.forEach((object) => {
+        allTasksArray.push(object)
+    })
+    renderFolderBtns(true)
+    displayCurrentFolder(allFoldersArray[0].name)
+}
 
+
+export function updateStorage() {
+    localStorage.setItem("taskArray", JSON.stringify(allTasksArray))
+    localStorage.setItem("folderArray", JSON.stringify(allFoldersArray))
+}
 
  
 newTaskBtn.addEventListener("click", () => newTaskModal.showModal())

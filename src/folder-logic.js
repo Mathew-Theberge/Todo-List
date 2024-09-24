@@ -1,4 +1,5 @@
 import {newProjectForm} from "./DOM-manipulation.js"
+import { updateStorage } from "./index.js"
 
 export const allFoldersArray = []
 
@@ -18,10 +19,12 @@ export function createFolderObj() {
     } else {
         allFoldersArray.push(project)
     }
+    updateStorage()
 }
-
-const defaultFolder = new Folder("Default Folder")
-allFoldersArray.push(defaultFolder)
+if (localStorage.length === 0) {
+    const defaultFolder = new Folder("Default Folder")
+    allFoldersArray.push(defaultFolder)
+}
 
 function isDuplicateName(newFolder) {
     return allFoldersArray.some(folder => folder.name === newFolder)

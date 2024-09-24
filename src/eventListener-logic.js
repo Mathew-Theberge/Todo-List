@@ -1,5 +1,6 @@
 import { displayCurrentFolder, projectName, displayCompletedFolder, displayAllTasksFolder, updateDisplay,} from "./DOM-manipulation"
 import { allFoldersArray } from "./folder-logic.js"
+import { updateStorage } from "./index.js"
 import { allTasksArray, updateTaskIds } from "./task-logic.js"
 
 export function toggleTaskCompletion(object) {
@@ -14,6 +15,7 @@ export function toggleTaskCompletion(object) {
             displayCurrentFolder(object.folder)
         }
     }
+    updateStorage()
 }
 
 export function deleteCard(object) {
@@ -26,6 +28,7 @@ export function deleteCard(object) {
     } else {
         displayCurrentFolder(object.folder)
     }
+    updateStorage()
 }
 
 export function deleteFolder(folderName) {
@@ -48,4 +51,5 @@ export function deleteFolder(folderName) {
             displayCurrentFolder(allFoldersArray[allFoldersArray.length -1].name)
         }
     }
+    updateStorage()
 }
