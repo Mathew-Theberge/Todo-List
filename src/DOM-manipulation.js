@@ -69,6 +69,10 @@ export function renderTaskObj(task) {
     deleteBtn.textContent = "X"
     container.classList.add("container")
 
+    if (task.isCompleted) {
+        radio.setAttribute("checked", "checked")
+    }
+
     switch (task.priority) {
         case "low":
             taskCard.classList.add("low")
@@ -88,11 +92,11 @@ export function renderTaskObj(task) {
     // event listeners
 
     radio.addEventListener("click", () => {
-        toggleTaskCompletion(task)
+        toggleTaskCompletion(task, taskCard, radio)
     })
 
     deleteBtn.addEventListener("click", () => {
-        deleteCard(task)
+        deleteCard(task, taskCard)
     })
 
 }

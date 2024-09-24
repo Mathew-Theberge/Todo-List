@@ -3,30 +3,51 @@ import { allFoldersArray } from "./folder-logic.js"
 import { updateStorage } from "./index.js"
 import { allTasksArray, updateTaskIds } from "./task-logic.js"
 
-export function toggleTaskCompletion(object) {
+export function toggleTaskCompletion(object, taskCard, radioBtn) {
     if (object.isCompleted === true) {
         object.isCompleted = false
-        displayCompletedFolder()
+        radioBtn.setAttribute("disabled", "disabled")
+        addFastFadeAnimation(taskCard, displayCompletedFolder)
     } else {
         object.isCompleted = true
         if (projectName.textContent === "All Tasks") {
-            displayAllTasksFolder()
+            addFadeAnimation(taskCard, displayAllTasksFolder)
         } else {
-            displayCurrentFolder(object.folder)
+            addFadeAnimation(taskCard, displayCurrentFolder, object.folder)
         }
     }
     updateStorage()
 }
 
-export function deleteCard(object) {
+function addFadeAnimation(taskCard, func, arg = null) {
+        taskCard.classList.add("hidden600")
+        document.body.style.pointerEvents = "none"
+        setTimeout(() => {
+            func(arg)
+            document.body.style.pointerEvents = "auto"
+        }, 600)
+}
+
+function addFastFadeAnimation(taskCard, func, arg = null) {
+    taskCard.classList.add("hidden250")
+    document.body.style.pointerEvents = "none"
+    setTimeout(() => {
+        func(arg)
+        document.body.style.pointerEvents = "auto"
+    }, 250)
+}
+
+export function deleteCard(object, taskCard) {
+
+
     allTasksArray.splice(object.id, 1)
     updateTaskIds()
     if (object.isCompleted === true) {
-        displayCompletedFolder()
+        addFastFadeAnimation(taskCard, displayCompletedFolder)
     } else if (projectName.textContent === "All Tasks") {
-        displayAllTasksFolder()
+        addFastFadeAnimation(taskCard, displayAllTasksFolder)
     } else {
-        displayCurrentFolder(object.folder)
+        addFastFadeAnimation(taskCard, displayCurrentFolder, object.folder)
     }
     updateStorage()
 }
