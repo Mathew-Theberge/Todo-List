@@ -20,6 +20,18 @@ import {
     displayCurrentFolder,
 } from "./DOM-manipulation.js"
 import { allFoldersArray } from "./folder-logic.js"
+
+const taskDateInput = document.querySelector("#taskDueDate")
+
+const date = new Date()
+
+let day = date.getDate()
+let month = "0" + (date.getMonth() + 1)
+let year = date.getFullYear()
+let currentDate = `${year}-${month}-${day}`
+
+taskDateInput.setAttribute("min", currentDate)
+
 if (localStorage.length === 0) {
     renderFolderBtns(true)
     updateStorage()
