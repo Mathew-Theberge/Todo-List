@@ -1,4 +1,5 @@
 import "./style.css"
+import "./darkmode.js"
 import {allTasksArray, createTaskObj} from "./task-logic.js"
 import {
     newTaskBtn,

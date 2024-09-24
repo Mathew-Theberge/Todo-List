@@ -7,6 +7,24 @@
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
+/* css variables */
+
+:root {
+    --clr-white: #ffffff;
+    --clr-black: #000000;
+    --clr-text: #111827;
+    --clr-dark: #ececec;
+    --clr-primary: #fa9639;
+    --clr-accent: #f7f7f7;
+}
+
+.darkmode {
+    --clr-text: #e5e7eb;
+    --clr-dark: #111827;
+    --clr-primary: #ad9dec;
+    --clr-accent: #1f2937;
+}
+
 /* main layout */
 
 body {
@@ -16,10 +34,16 @@ body {
     grid-template-rows: auto 1fr;
 }
 
+
 #sidebar {
     width: 300px;
-    background-color: rgb(179, 179, 179);
+    background-color: var(--clr-dark);
     grid-row: 1 / 3;
+}
+
+svg {
+	width: 25px;
+	height: 25px;
 }
 
 #header {
@@ -27,7 +51,7 @@ body {
 }
 
 #content {
-    background-color: rgb(221, 221, 221);
+    background-color: var(--clr-accent);
 }
 
 dialog {
@@ -53,6 +77,10 @@ dialog {
 .high {
     background-color: rgb(252, 123, 123);
 }
+
+/* sidebar styling */
+
+
 
 /* animations */
 

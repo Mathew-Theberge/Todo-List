@@ -60,13 +60,31 @@ export function renderTaskObj(task) {
     const dueDate = document.createElement("div")
     const deleteBtn = document.createElement("button")
     const container = document.createElement("div")
+    const svgTrashCan = document.createElementNS("http://www.w3.org/2000/svg", "svg")
+    const pathTrashCan = document.createElementNS('http://www.w3.org/2000/svg', 'path')
+
+    svgTrashCan.setAttribute("class", "w-6 h-6 text-gray-800 dark:text-white")
+    svgTrashCan.setAttribute("aria-hidden", "true")
+    svgTrashCan.setAttribute("xmlns", "http://www.w3.org/2000/svg")
+    svgTrashCan.setAttribute("width", "24")
+    svgTrashCan.setAttribute("height", "24")
+    svgTrashCan.setAttribute("fill", "none")
+    svgTrashCan.setAttribute("viewbox", "0 0 24 24")
+
+    pathTrashCan.setAttribute("stroke", "currentColor")
+    pathTrashCan.setAttribute("stroke-linecap", "round")
+    pathTrashCan.setAttribute("stroke-linejoin", "round")
+    pathTrashCan.setAttribute("stroke-width", "2")
+    pathTrashCan.setAttribute("d", "M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z")
+
+    svgTrashCan.append(pathTrashCan)
 
     taskCard.classList.add("taskCard")
     radio.setAttribute("type", "radio")
     name.textContent = task.name
     description.textContent = task.description
     dueDate.textContent = task.dueDate
-    deleteBtn.textContent = "X"
+    deleteBtn.append(svgTrashCan)
     container.classList.add("container")
 
     if (task.isCompleted) {
@@ -111,9 +129,43 @@ export function renderFolderBtns(manualCallback = false) {
         const projectBtn = document.createElement("button")
         const deleteBtn = document.createElement("button")
         const folderOption = document.createElement("option")
-    
-        projectBtn.textContent = folder.name
-        deleteBtn.textContent = "X"
+        const svgFolder = document.createElementNS("http://www.w3.org/2000/svg", "svg")
+        const pathFolder = document.createElementNS('http://www.w3.org/2000/svg', 'path')
+        const svgTrashCan = document.createElementNS("http://www.w3.org/2000/svg", "svg")
+        const pathTrashCan = document.createElementNS('http://www.w3.org/2000/svg', 'path')
+
+        svgFolder.setAttribute("class", "w-6 h-6 text-gray-800 dark:text-white")
+        svgFolder.setAttribute("aria-hidden", "true")
+        svgFolder.setAttribute("xmlns", "http://www.w3.org/2000/svg")
+        svgFolder.setAttribute("width", "24")
+        svgFolder.setAttribute("height", "24")
+        svgFolder.setAttribute("fill", "currentColor")
+        svgFolder.setAttribute("viewbox", "0 0 24 24")
+
+        pathFolder.setAttribute("fill-rule", "evenodd")
+        pathFolder.setAttribute("d", "M4 4a2 2 0 0 0-2 2v12a2 2 0 0 0 .087.586l2.977-7.937A1 1 0 0 1 6 10h12V9a2 2 0 0 0-2-2h-4.532l-1.9-2.28A2 2 0 0 0 8.032 4H4Zm2.693 8H6.5l-3 8H18l3-8H6.693Z")
+        pathFolder.setAttribute("clip-rule", "evenodd")
+        svgFolder.append(pathFolder)
+
+        svgTrashCan.setAttribute("class", "w-6 h-6 text-gray-800 dark:text-white")
+        svgTrashCan.setAttribute("aria-hidden", "true")
+        svgTrashCan.setAttribute("xmlns", "http://www.w3.org/2000/svg")
+        svgTrashCan.setAttribute("width", "24")
+        svgTrashCan.setAttribute("height", "24")
+        svgTrashCan.setAttribute("fill", "none")
+        svgTrashCan.setAttribute("viewbox", "0 0 24 24")
+
+        pathTrashCan.setAttribute("stroke", "currentColor")
+        pathTrashCan.setAttribute("stroke-linecap", "round")
+        pathTrashCan.setAttribute("stroke-linejoin", "round")
+        pathTrashCan.setAttribute("stroke-width", "2")
+        pathTrashCan.setAttribute("d", "M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z")
+
+        svgTrashCan.append(pathTrashCan)
+
+
+        deleteBtn.append(svgTrashCan)
+        projectBtn.append(svgFolder, folder.name)
         const removedSpaces = folder.name.replace(/ /g, "")
         projectBtn.classList.add(removedSpaces)
         folderOption.textContent = folder.name
