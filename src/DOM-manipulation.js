@@ -1,13 +1,12 @@
-import {createTaskObj} from "./create-new-task.js"
-import { currentProjectObj } from "./index.js"
-import { createProjectObj, displayCurrentProject, setCurrentProject} from "./project-logic.js"
+import {allTasksArray} from "./task-logic.js"
+import { createFolderObj, allFoldersArray} from "./folder-logic.js"
+import { toggleTaskCompletion, deleteCard, deleteFolder} from "./eventListener-logic.js"
 
 export const newTaskBtn = document.querySelector(".newTaskBtn")
 export const newTaskModal = document.querySelector("#newTaskModal")
 export const newTaskForm = document.querySelector("#newTaskForm")
 export const content = document.querySelector("#content")
 export const allTasksBtn = document.querySelector(".allTasksBtn")
-export const allTasksElement = document.querySelector(".allTasks")
 export const newProjectModal = document.querySelector("#newProjectModal")
 export const newProjectForm = document.querySelector("#newProjectForm")
 export const taskCancelBtn = document.querySelector(".taskCancelBtn")
@@ -15,18 +14,44 @@ export const projectCancelBtn = document.querySelector(".projectCancelBtn")
 export const newProjectBtn = document.querySelector(".newProjectBtn")
 export const sidebar = document.querySelector("#sidebar")
 export const completedBtn = document.querySelector(".completedBtn")
-export const completedBtnElement = document.querySelector(".completedBtnElement")
 export const projectName = document.querySelector(".projectName")
+export const folders = document.querySelector(".folders")
+export const tasks = document.querySelector(".tasks")
+export const projectFolder = document.querySelector("#projectFolder")
 
 
-export function exitModal(modal, form) {
-    modal.close()
-    form.reset()
+export function displayCompletedFolder() {
+    tasks.replaceChildren()
+    const filteredTasks = allTasksArray.filter((taskCard) => {
+        if (true === taskCard.isCompleted) {return taskCard}
+    })
+    filteredTasks.forEach((task) => renderTaskObj(task))
+    projectName.textContent = "Completed"
 }
 
-export function renderTaskObj(e, project) {
-    e.preventDefault()
-    const taskObj = createTaskObj()
+export function displayAllTasksFolder() {
+    tasks.replaceChildren()
+    allTasksArray.forEach((task) => {
+        if (task.folder !== "Completed" && task.isCompleted === false) {renderTaskObj(task)}
+    })
+    projectName.textContent = "All Tasks"
+}
+
+export function displayCurrentFolder(folderName) {
+    tasks.replaceChildren()
+    const filteredTasks = allTasksArray.filter((taskCard) => {
+        if (folderName === taskCard.folder && taskCard.isCompleted === false) {return taskCard}
+    })
+    filteredTasks.forEach((task) => renderTaskObj(task))
+    projectName.textContent = folderName
+}
+
+export function updateDisplay() {
+    displayCurrentFolder(allTasksArray[allTasksArray.length - 1].folder)
+}
+
+
+export function renderTaskObj(task) {
 
     const taskCard = document.createElement("div")
     const radio = document.createElement("input")
@@ -38,13 +63,13 @@ export function renderTaskObj(e, project) {
 
     taskCard.classList.add("taskCard")
     radio.setAttribute("type", "radio")
-    name.textContent = taskObj.name
-    description.textContent = taskObj.description
-    dueDate.textContent = taskObj.dueDate
+    name.textContent = task.name
+    description.textContent = task.description
+    dueDate.textContent = task.dueDate
     deleteBtn.textContent = "X"
     container.classList.add("container")
 
-    switch (taskObj.priority) {
+    switch (task.priority) {
         case "low":
             taskCard.classList.add("low")
             break
@@ -58,86 +83,58 @@ export function renderTaskObj(e, project) {
 
     container.append(name, description, dueDate)
     taskCard.append(radio, container, deleteBtn)
-    const clone = taskCard.cloneNode(true)
-    allTasksElement.append(clone)
-    if (project.currentProject !== allTasksElement) {
-        project.currentProject.append(taskCard)
-    }
+    tasks.append(taskCard)
 
-    // event listeners for the interactive parts of the task
-
-    deleteBtn.addEventListener("click", () => {
-        clone.remove()
-        taskCard.remove()
-    })
-    clone.lastChild.addEventListener("click",() => {
-        clone.remove()
-        taskCard.remove()
-    })
+    // event listeners
 
     radio.addEventListener("click", () => {
-        if (currentProjectObj.currentProject !== completedBtnElement) {
-            completedBtnElement.append(taskCard)
-            clone.remove()
-        }
+        toggleTaskCompletion(task)
     })
-
-    clone.firstChild.addEventListener("click", () => {
-        if (currentProjectObj.currentProject !== completedBtnElement) {
-            completedBtnElement.append(clone)
-            taskCard.remove()
-        }
-    })
-
-    exitModal(newTaskModal, newTaskForm)
-}
-
-export function renderProjectBtns(e) {
-    e.preventDefault()
-    const project = createProjectObj()
-
-    const container = document.createElement("div")
-    const projectBtn = document.createElement("button")
-    const deleteBtn = document.createElement("button")
-    const projectElement = document.createElement("div")
-
-    projectBtn.textContent = project.name
-    deleteBtn.textContent = "X"
-    const removedSpaces = project.name.replace(/ /g, "")
-    projectElement.classList.add(`${removedSpaces}`)
-
-    container.append(projectBtn, deleteBtn)
-    sidebar.append(container)
-    content.append(projectElement)
-
-    // event listener logic
 
     deleteBtn.addEventListener("click", () => {
-        container.remove()
+        deleteCard(task)
+    })
 
-        // this code is here to make sure if a project list is deleted
-        // all of the todos / tasks that belong to that project
-        // also get deleted in the all Tasks folder
-        const projectElementChildren = Array.from(projectElement.children)
-        const allTasksElementChildren = Array.from(allTasksElement.children)
-        projectElementChildren.forEach( (element) => {
-            allTasksElementChildren.forEach((element2) => {
-                if(element.isEqualNode(element2)) {
-                    element2.remove()
-                }
-            })
+}
+
+export function renderFolderBtns(manualCallback = false) {
+
+    folders.replaceChildren()
+    projectFolder.replaceChildren()
+    if (manualCallback === false) {createFolderObj()}
+    allFoldersArray.forEach( (folder) => {
+        const container = document.createElement("div")
+        const projectBtn = document.createElement("button")
+        const deleteBtn = document.createElement("button")
+        const folderOption = document.createElement("option")
+    
+        projectBtn.textContent = folder.name
+        deleteBtn.textContent = "X"
+        const removedSpaces = folder.name.replace(/ /g, "")
+        projectBtn.classList.add(removedSpaces)
+        folderOption.textContent = folder.name
+        folderOption.setAttribute("value", folder.name)
+    
+        container.append(projectBtn, deleteBtn)
+        folders.append(container)
+        projectFolder.append(folderOption)
+        displayCurrentFolder(folder.name)
+
+        // event listeners
+
+        projectBtn.addEventListener("click", () => {
+            displayCurrentFolder(folder.name)
         })
 
-        projectElement.remove()
+        deleteBtn.addEventListener("click", () => {
+            if (allFoldersArray.length > 1) {
+                deleteFolder(folder.name)
+                container.remove()
+                folderOption.remove()
+            }
+        })
     })
 
-    projectBtn.addEventListener("click", () => {
-        setCurrentProject(projectElement)
-        displayCurrentProject(projectElement)
-        projectName.textContent = project.name
-    })
-
-    exitModal(newProjectModal, newProjectForm)
 }
 
 export function closeModalOnOutsideClick(e, modal, form) {
@@ -150,6 +147,11 @@ export function closeModalOnOutsideClick(e, modal, form) {
     ) {
     exitModal(modal, form)
     }
+}
+
+export function exitModal(modal, form) {
+    modal.close()
+    form.reset()
 }
 
 

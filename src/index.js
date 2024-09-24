@@ -1,45 +1,34 @@
 import "./style.css"
-import { displayCurrentProject, setCurrentProject } from "./project-logic.js"
+import {createTaskObj} from "./task-logic.js"
 import {
     newTaskBtn,
     newTaskForm,
     newTaskModal,
     closeModalOnOutsideClick,
-    renderTaskObj,
-    allTasksElement,
     newProjectModal,
     newProjectForm,
     projectCancelBtn,
     taskCancelBtn,
     newProjectBtn,
     exitModal,
-    renderProjectBtns,
+    renderFolderBtns,
     allTasksBtn, 
     completedBtn,
-    completedBtnElement
+    updateDisplay,
+    displayCompletedFolder,
+    displayAllTasksFolder
 } from "./DOM-manipulation.js"
 
-export let currentProjectObj = {currentProject: allTasksElement}
+renderFolderBtns(true)
 
-displayCurrentProject(allTasksElement)
 
-allTasksBtn.addEventListener("click", () => {
-    setCurrentProject(allTasksElement)
-    displayCurrentProject(allTasksElement)
+ 
+newTaskBtn.addEventListener("click", () => newTaskModal.showModal())
+newTaskModal.addEventListener("click", (e) => {
+    setTimeout( () => closeModalOnOutsideClick(e, newTaskModal, newTaskForm), 5) 
 })
-
-completedBtn.addEventListener("click", () => {
-    setCurrentProject(completedBtnElement)
-    displayCurrentProject(completedBtnElement)
-})
-
-newTaskBtn.addEventListener("click", () => {
-    if(currentProjectObj.currentProject !== completedBtnElement) {
-        newTaskModal.showModal()
-    }
-})
-newTaskModal.addEventListener("click", (e) => closeModalOnOutsideClick(e, newTaskModal, newTaskForm))
 taskCancelBtn.addEventListener("click", () => exitModal(newTaskModal, newTaskForm))
+
 
 newProjectBtn.addEventListener("click", () => newProjectModal.showModal())
 newProjectModal.addEventListener("click", (e) => {
@@ -47,10 +36,20 @@ newProjectModal.addEventListener("click", (e) => {
 })
 projectCancelBtn.addEventListener("click", () => exitModal(newProjectModal, newProjectForm))
 
+
 newTaskForm.addEventListener("submit", (e) => {
-    renderTaskObj(e, currentProjectObj)
+    e.preventDefault()
+    createTaskObj()
+    updateDisplay()
+    exitModal(newTaskModal, newTaskForm)
 })
 
 newProjectForm.addEventListener("submit", (e) => {
-    renderProjectBtns(e)
+    e.preventDefault()
+    renderFolderBtns()
+    exitModal(newProjectModal, newProjectForm)
 })
+
+allTasksBtn.addEventListener("click", () => displayAllTasksFolder())
+
+completedBtn.addEventListener("click", () => displayCompletedFolder())

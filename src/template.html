@@ -11,6 +11,11 @@
         <form action="" id="newTaskForm">
             <h2>Create New Task</h2>
             <div>
+                <label for="projectFolder">Project Folder</label>
+                <select name="project_folder" id="projectFolder">
+                </select>
+            </div>
+            <div>
                 <label for="taskName">Task Name</label>
                 <input type="text" name="task_name" id="taskName">
             </div>
@@ -49,9 +54,12 @@
 
     <div id="sidebar">
         <div class="logo">Logo</div>
-        <button class="completedBtn">Completed</button>
-        <div>My Projects</div>
+        <button class="completedBtn">Completed</button> <br>
         <button class="allTasksBtn">All Tasks</button>
+        <div>My Projects</div>
+        <div class="folders">
+
+        </div>
     </div>
 
     <header id="header">
@@ -60,9 +68,10 @@
     </header>
 
     <div id="content">
-        <div class="projectName">Project Name</div>
-        <div class="allTasks"></div>
-        <div class="completedBtnElement"></div>
+        <div class="projectName">Default Folder</div>
+        <div class="tasks">
+
+        </div>
     </div>
 
 </body>
