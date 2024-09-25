@@ -15,13 +15,15 @@
     --clr-text: #111827;
     --clr-dark: #ececec;
     --clr-primary: #fa9639;
+    --clr-primary-semi-transparent:#fa963970;
     --clr-accent: #f7f7f7;
 }
 
 .darkmode {
-    --clr-text: #e5e7eb;
+    --clr-text: #d7dce6;
     --clr-dark: #111827;
     --clr-primary: #ad9dec;
+    --clr-primary-semi-transparent:#ad9dec70;
     --clr-accent: #1f2937;
 }
 
@@ -42,8 +44,8 @@ body {
 }
 
 svg {
-	width: 25px;
-	height: 25px;
+	width: 24px;
+	height: 24px;
 }
 
 #header {
@@ -64,7 +66,7 @@ dialog {
 }
 
 
-/* task card priority styles */
+/* style classes add via javascript */
 
 .low {
     background-color: rgb(157, 253, 157);
@@ -78,7 +80,67 @@ dialog {
     background-color: rgb(252, 123, 123);
 }
 
+.active {
+    background-color: var(--clr-primary);
+}
+
+.folders .active:hover{
+    background-color: var(--clr-primary);
+}
+
 /* sidebar styling */
+
+
+    #sidebar {
+        display: flex;
+        flex-direction: column;
+        padding: 1rem;
+        align-items: center;
+    }
+
+
+    button {
+        display: flex;
+        align-items: center;
+        outline: none;
+    }
+
+
+    .folderContainer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 200px;
+        margin-top: 0.5rem;
+        border-radius: 8px;
+    }
+
+    .folderContainer:hover {
+        background-color: var(--clr-primary-semi-transparent);
+    }
+
+
+    .folderContainer button {
+        border: none;
+        background-color: #00000000;
+        padding-right: 8px;
+        color: var(--clr-text);
+        font-size: 1rem;
+        font-weight: bold;
+        overflow-wrap: anywhere;
+    }
+
+    .folderContainer button:first-child {
+        background-color: #00000000;
+        flex-grow: 1;
+        padding: 10px;
+    }
+
+    .folderContainer button:first-child svg {
+        flex-shrink: 0;
+        margin-right: 3px;
+        margin-top: 2px;
+    }
 
 
 

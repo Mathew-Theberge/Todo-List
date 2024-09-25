@@ -51,6 +51,7 @@ if (localStorage.length === 0) {
 }
 
 
+
 export function updateStorage() {
     localStorage.setItem("taskArray", JSON.stringify(allTasksArray))
     localStorage.setItem("folderArray", JSON.stringify(allFoldersArray))

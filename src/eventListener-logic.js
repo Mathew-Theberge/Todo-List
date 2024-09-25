@@ -66,11 +66,7 @@ export function deleteFolder(folderName) {
     } else if (projectName.textContent === "All Tasks") {
         displayAllTasksFolder()
     } else {
-        if (allTasksArray.length > 0) {
-            updateDisplay()
-        } else {
-            displayCurrentFolder(allFoldersArray[allFoldersArray.length -1].name)
-        }
+        displayCurrentFolder(allFoldersArray[allFoldersArray.length -1].name)
     }
     updateStorage()
 }

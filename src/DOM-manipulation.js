@@ -44,7 +44,20 @@ export function displayCurrentFolder(folderName) {
     })
     filteredTasks.forEach((task) => renderTaskObj(task))
     projectName.textContent = folderName
+    highlightFolder(folderName)
 }
+
+function highlightFolder(folderName) {
+    folders.childNodes.forEach((node => {
+        if (node.firstChild.textContent === folderName) {
+            folders.childNodes.forEach((node) => {
+                node.classList.remove("active")
+            })
+            node.classList.add("active")
+        }
+    }))
+}
+
 
 export function updateDisplay() {
     displayCurrentFolder(allTasksArray[allTasksArray.length - 1].folder)
@@ -163,7 +176,7 @@ export function renderFolderBtns(manualCallback = false) {
 
         svgTrashCan.append(pathTrashCan)
 
-
+        container.classList.add("folderContainer")
         deleteBtn.append(svgTrashCan)
         projectBtn.append(svgFolder, folder.name)
         const removedSpaces = folder.name.replace(/ /g, "")
