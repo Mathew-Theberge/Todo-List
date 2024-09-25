@@ -7,6 +7,16 @@
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
+button {
+    color: inherit;
+    font: inherit;
+    outline: none;
+}
+
+a {
+    text-decoration: none;
+}
+
 /* css variables */
 
 :root {
@@ -15,16 +25,22 @@
     --clr-text: #111827;
     --clr-dark: #ececec;
     --clr-primary: #fa9639;
-    --clr-primary-semi-transparent:#fa963970;
+    --clr-secondary:#5b4fff;
+    --clr-primary-semi-transparent:#fa963942;
+    --clr-secondary-semi-transparent:#5b4fffc0;
     --clr-accent: #f7f7f7;
+    color: #5e5e5e;
 }
 
 .darkmode {
     --clr-text: #d7dce6;
     --clr-dark: #111827;
-    --clr-primary: #ad9dec;
-    --clr-primary-semi-transparent:#ad9dec70;
+    --clr-primary: #bdadfd;
+    --clr-secondary: #00758a;
+    --clr-primary-semi-transparent:#bdadfd42;
+    --clr-secondary-semi-transparent:#00758ab4;
     --clr-accent: #1f2937;
+    color: white;
 }
 
 /* main layout */
@@ -33,12 +49,15 @@ body {
     min-height: 100svh;
     display: grid;
     grid-template-columns: auto 1fr;
-    grid-template-rows: auto 1fr;
+    grid-template-rows: 200px 1fr;
+    -webkit-font-smoothing: antialiased;
+    -moz-font-smoothing: antialiased;
+    -o-font-smoothing: antialiased;
 }
 
 
 #sidebar {
-    width: 300px;
+    width: 250px;
     background-color: var(--clr-dark);
     grid-row: 1 / 3;
 }
@@ -81,12 +100,19 @@ dialog {
 }
 
 .active {
+    background-color: var(--clr-primary) !important;
+}
+
+.folders .active:hover,
+#sidebar .active:hover{
     background-color: var(--clr-primary);
 }
 
-.folders .active:hover{
-    background-color: var(--clr-primary);
+.folderContainer.active button,
+#sidebar button.active {
+    color:var(--clr-dark) !important;
 }
+
 
 /* sidebar styling */
 
@@ -111,12 +137,76 @@ dialog {
         justify-content: space-between;
         align-items: center;
         width: 200px;
-        margin-top: 0.5rem;
+        margin-top: 8px;
         border-radius: 8px;
     }
 
-    .folderContainer:hover {
+    .logo {
+        font-weight: bolder;
+        font-size: 2.25rem;
+        border-bottom: solid  4px;
+    }
+
+    .logo span {
+        color: var(--clr-primary);
+    }
+
+    .flex-container {
+        display: flex;
+        border: 1px solid #cccccc;
+        align-items: center;
+        gap: 4px;
+        margin-top: 28px;
+        padding: 4px;
+        border-radius: 12px;
+        font-weight: bold;
+        font-size: 14px;
+        width: 200px;
+    }
+
+    .flex-container svg {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+    }
+
+    a {
+        height: 50px;
+        border-radius: 50%;
+        color: black;
+    }
+
+    #sidebar .newTaskBtn,
+    #sidebar .newProjectBtn {
+        color: #ffffff;
+        background-color: var(--clr-secondary);
+    }
+
+    #sidebar .newTaskBtn:hover,
+    #sidebar .newProjectBtn:hover {
+        color: #80ff80;
+        background-color: var(--clr-secondary-semi-transparent);
+    }
+
+
+    .folderContainer:hover,
+    #sidebar .allTasksBtn:hover,
+    #sidebar .completedBtn:hover {
         background-color: var(--clr-primary-semi-transparent);
+    }
+
+    #sidebar > button {
+        width: 200px;
+        border: none;
+        border-radius: 8px;
+        background-color: #00000000;
+        font-weight: bold;
+        padding: 10px;
+        margin-top: 8px;
+    }
+
+    #sidebar > button svg {
+        margin-right: 3px;
     }
 
 
@@ -124,10 +214,14 @@ dialog {
         border: none;
         background-color: #00000000;
         padding-right: 8px;
-        color: var(--clr-text);
+        color: #5e5e5e;
         font-size: 1rem;
         font-weight: bold;
         overflow-wrap: anywhere;
+    }
+
+    body.darkmode .folderContainer button {
+        color: white;
     }
 
     .folderContainer button:first-child {
@@ -140,6 +234,24 @@ dialog {
         flex-shrink: 0;
         margin-right: 3px;
         margin-top: 2px;
+    }
+
+    .myProjectDiv {
+        position: relative;
+        right: 70px;
+        top : 1px;
+        font-size: 12px;
+        font-weight: bold;
+        margin-top: 30px;
+    }
+
+    .menu {
+        position: relative;
+        right: 64px;
+        top : 1px;
+        font-size: 12px;
+        font-weight: bold;
+        margin-top: 50px;
     }
 
 
