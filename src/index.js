@@ -36,6 +36,7 @@ taskDateInput.setAttribute("min", currentDate)
 if (localStorage.length === 0) {
     renderFolderBtns(true)
     updateStorage()
+    displayCurrentFolder("Default Folder")
 } else {
     const deserializedFolder = JSON.parse(localStorage.getItem("folderArray"))
     deserializedFolder.forEach( object => {

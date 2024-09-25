@@ -40,6 +40,11 @@ class Task {
     updateStorage()
   }
 
+  if (localStorage.length === 0) {
+    const defaultTask = new Task("Default Folder", "Default Name", "A basic description for the task", "2025-10-05", "high", false)
+    allTasksArray.push(defaultTask)
+}
+
 
 
 

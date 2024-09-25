@@ -5,6 +5,12 @@
     padding: 0;
     box-sizing: border-box;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+*::-webkit-scrollbar {
+    display: none;
 }
 
 button {
@@ -20,15 +26,16 @@ a {
 /* css variables */
 
 :root {
-    --clr-white: #ffffff;
-    --clr-black: #000000;
     --clr-text: #111827;
     --clr-dark: #ececec;
     --clr-primary: #fa9639;
     --clr-secondary:#5b4fff;
     --clr-primary-semi-transparent:#fa963942;
     --clr-secondary-semi-transparent:#5b4fffc0;
+    --clr-toggle-shade: black;
     --clr-accent: #f7f7f7;
+    --rotateIcon: 180deg;
+    --header-image: url(images/header-background1lightmode.svg);
     color: #5e5e5e;
 }
 
@@ -39,17 +46,20 @@ a {
     --clr-secondary: #00758a;
     --clr-primary-semi-transparent:#bdadfd42;
     --clr-secondary-semi-transparent:#00758ab4;
+    --clr-toggle-shade: rgb(234, 226, 255);
     --clr-accent: #1f2937;
+    --rotateIcon: 0deg;
+    --header-image: url(images/header-background1-darkmode.svg);
     color: white;
 }
 
 /* main layout */
 
 body {
-    min-height: 100svh;
+    height: 100svh;
     display: grid;
     grid-template-columns: auto 1fr;
-    grid-template-rows: 200px 1fr;
+    grid-template-rows: 185px 1fr;
     -webkit-font-smoothing: antialiased;
     -moz-font-smoothing: antialiased;
     -o-font-smoothing: antialiased;
@@ -67,12 +77,10 @@ svg {
 	height: 24px;
 }
 
-#header {
-    background-color: bisque;
-}
-
 #content {
     background-color: var(--clr-accent);
+    background-repeat: no-repeat;
+    overflow-y: auto;
 }
 
 dialog {
@@ -88,15 +96,19 @@ dialog {
 /* style classes add via javascript */
 
 .low {
-    background-color: rgb(157, 253, 157);
+    border: rgb(157, 253, 157) solid 2px;
 }
 
 .moderate {
-    background-color: rgb(255, 255, 113);
+    border: rgb(255, 255, 113) solid 2px;
 }
 
 .high {
-    background-color: rgb(252, 123, 123);
+    border: rgb(252, 123, 123) solid 2px;
+}
+
+.hide {
+    display: none;
 }
 
 .active {
@@ -113,146 +125,190 @@ dialog {
     color:var(--clr-dark) !important;
 }
 
+.rotate {
+    rotate: 180deg;
+}
+
 
 /* sidebar styling */
 
 
-    #sidebar {
-        display: flex;
-        flex-direction: column;
-        padding: 1rem;
-        align-items: center;
-    }
+#sidebar {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    align-items: center;
+    overflow-y: auto;
+}
 
 
-    button {
-        display: flex;
-        align-items: center;
-        outline: none;
-    }
+button {
+    display: flex;
+    align-items: center;
+    outline: none;
+}
 
 
-    .folderContainer {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        width: 200px;
-        margin-top: 8px;
-        border-radius: 8px;
-    }
+.folderContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 200px;
+    margin-top: 8px;
+    border-radius: 8px;
+}
 
-    .logo {
-        font-weight: bolder;
-        font-size: 2.25rem;
-        border-bottom: solid  4px;
-    }
+.logo {
+    font-weight: bolder;
+    font-size: 2.25rem;
+    border-bottom: solid  4px;
+}
 
-    .logo span {
-        color: var(--clr-primary);
-    }
+.logo span {
+    color: var(--clr-primary);
+}
 
-    .flex-container {
-        display: flex;
-        border: 1px solid #cccccc;
-        align-items: center;
-        gap: 4px;
-        margin-top: 28px;
-        padding: 4px;
-        border-radius: 12px;
-        font-weight: bold;
-        font-size: 14px;
-        width: 200px;
-    }
+.flex-container {
+    display: flex;
+    border: 1px solid #cccccc;
+    align-items: center;
+    gap: 4px;
+    margin-top: 28px;
+    padding: 4px;
+    border-radius: 12px;
+    font-weight: bold;
+    font-size: 14px;
+    width: 200px;
+}
 
-    .flex-container svg {
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-    }
+.flex-container svg {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
 
-    a {
-        height: 50px;
-        border-radius: 50%;
-        color: black;
-    }
+a {
+    height: 50px;
+    border-radius: 50%;
+    color: black;
+}
 
-    #sidebar .newTaskBtn,
-    #sidebar .newProjectBtn {
-        color: #ffffff;
-        background-color: var(--clr-secondary);
-    }
+#sidebar .newTaskBtn,
+#sidebar .newProjectBtn {
+    color: #ffffff;
+    background-color: var(--clr-secondary);
+}
 
-    #sidebar .newTaskBtn:hover,
-    #sidebar .newProjectBtn:hover {
-        color: #80ff80;
-        background-color: var(--clr-secondary-semi-transparent);
-    }
-
-
-    .folderContainer:hover,
-    #sidebar .allTasksBtn:hover,
-    #sidebar .completedBtn:hover {
-        background-color: var(--clr-primary-semi-transparent);
-    }
-
-    #sidebar > button {
-        width: 200px;
-        border: none;
-        border-radius: 8px;
-        background-color: #00000000;
-        font-weight: bold;
-        padding: 10px;
-        margin-top: 8px;
-    }
-
-    #sidebar > button svg {
-        margin-right: 3px;
-    }
+#sidebar .newTaskBtn:hover,
+#sidebar .newProjectBtn:hover {
+    color: #80ff80;
+    background-color: var(--clr-secondary-semi-transparent);
+}
 
 
-    .folderContainer button {
-        border: none;
-        background-color: #00000000;
-        padding-right: 8px;
-        color: #5e5e5e;
-        font-size: 1rem;
-        font-weight: bold;
-        overflow-wrap: anywhere;
-    }
+.folderContainer:hover,
+#sidebar .allTasksBtn:hover,
+#sidebar .completedBtn:hover {
+    background-color: var(--clr-primary-semi-transparent);
+}
 
-    body.darkmode .folderContainer button {
-        color: white;
-    }
+#sidebar > button {
+    width: 200px;
+    border: none;
+    border-radius: 8px;
+    background-color: #00000000;
+    font-weight: bold;
+    padding: 10px;
+    margin-top: 8px;
+}
 
-    .folderContainer button:first-child {
-        background-color: #00000000;
-        flex-grow: 1;
-        padding: 10px;
-    }
+#sidebar > button svg {
+    margin-right: 3px;
+}
 
-    .folderContainer button:first-child svg {
-        flex-shrink: 0;
-        margin-right: 3px;
-        margin-top: 2px;
-    }
 
-    .myProjectDiv {
-        position: relative;
-        right: 70px;
-        top : 1px;
-        font-size: 12px;
-        font-weight: bold;
-        margin-top: 30px;
-    }
+.folderContainer button {
+    border: none;
+    background-color: #00000000;
+    padding-right: 8px;
+    color: #5e5e5e;
+    font-size: 1rem;
+    font-weight: bold;
+    overflow-wrap: anywhere;
+}
 
-    .menu {
-        position: relative;
-        right: 64px;
-        top : 1px;
-        font-size: 12px;
-        font-weight: bold;
-        margin-top: 50px;
-    }
+body.darkmode .folderContainer button {
+    color: white;
+}
+
+.folderContainer button:first-child {
+    background-color: #00000000;
+    flex-grow: 1;
+    padding: 10px;
+}
+
+.folderContainer button:first-child svg {
+    flex-shrink: 0;
+    margin-right: 3px;
+    margin-top: 2px;
+}
+
+.myProjectDiv {
+    position: relative;
+    right: 70px;
+    top : 1px;
+    font-size: 12px;
+    font-weight: bold;
+    margin-top: 30px;
+}
+
+.menu {
+    position: relative;
+    right: 64px;
+    top : 1px;
+    font-size: 12px;
+    font-weight: bold;
+    margin-top: 50px;
+}
+
+/* header styling */
+
+#header {
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    background-image: var(--header-image);
+}
+
+.darkModeToggle {
+    width: 40px;
+    height: 40px;
+    align-self: flex-end;
+    background-color: #00000000;
+    border: var(--clr-toggle-shade) solid 3px;
+    border-radius: 8px;
+}
+
+#header button svg {
+    width: 40px;
+    height: 40px;
+    rotate: var(--rotateIcon);
+}
+
+#header :last-child {
+    color: white;
+    font-size: 2.25rem;
+    font-weight: 400;
+    margin: 0;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+#header div {
+    color: #ffffff;
+    font-weight: 900;
+    margin-top: auto;
+    margin-bottom: 3px;
+}
 
 
 

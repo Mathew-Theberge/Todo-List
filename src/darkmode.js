@@ -1,4 +1,8 @@
 let darkMode = localStorage.getItem("darkmode")
+const darkModeSVG = document.querySelector("#Layer_1")
+const header = document.querySelector("#header")
+const lightBackground1 = document.querySelector("#visual1")
+const darkBackground1 = document.querySelector("#visual2")
 
 const darkModeBtn = document.querySelector(".darkModeToggle")
 
