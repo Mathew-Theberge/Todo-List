@@ -27,6 +27,11 @@ export function displayCompletedFolder() {
     })
     filteredTasks.forEach((task) => renderTaskObj(task))
     projectName.textContent = "Completed"
+    folders.childNodes.forEach((node) => {
+        node.classList.remove("active")
+    })
+    allTasksBtn.classList.remove("active")
+    completedBtn.classList.add("active")
 }
 
 export function displayAllTasksFolder() {
@@ -35,6 +40,11 @@ export function displayAllTasksFolder() {
         if (task.folder !== "Completed" && task.isCompleted === false) {renderTaskObj(task)}
     })
     projectName.textContent = "All Tasks"
+    folders.childNodes.forEach((node) => {
+        node.classList.remove("active")
+    })
+    completedBtn.classList.remove("active")
+    allTasksBtn.classList.add("active")
 }
 
 export function displayCurrentFolder(folderName) {
@@ -54,6 +64,8 @@ function highlightFolder(folderName) {
                 node.classList.remove("active")
             })
             node.classList.add("active")
+            completedBtn.classList.remove("active")
+            allTasksBtn.classList.remove("active")
         }
     }))
 }
