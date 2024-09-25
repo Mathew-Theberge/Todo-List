@@ -26,14 +26,15 @@ a {
 /* css variables */
 
 :root {
+    --form-control-color: rebeccapurple;
     --clr-text: #111827;
-    --clr-dark: #ececec;
+    --clr-dark: #e2e2e2;
     --clr-primary: #fa9639;
     --clr-secondary:#5b4fff;
     --clr-primary-semi-transparent:#fa963942;
     --clr-secondary-semi-transparent:#5b4fffc0;
     --clr-toggle-shade: black;
-    --clr-accent: #f7f7f7;
+    --clr-accent: #f3f3f3;
     --rotateIcon: 180deg;
     --header-image: url(images/header-background1lightmode.svg);
     color: #5e5e5e;
@@ -205,6 +206,10 @@ a {
     background-color: var(--clr-secondary-semi-transparent);
 }
 
+.folderContainer :last-child:hover {
+    color: color-mix(in srgb, currentColor 65%, transparent);
+}
+
 
 .folderContainer:hover,
 #sidebar .allTasksBtn:hover,
@@ -310,6 +315,90 @@ body.darkmode .folderContainer button {
     margin-bottom: 3px;
 }
 
+/* content body / card section styling */
+
+.tasks {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 16px;
+}
+
+.taskCard {
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    padding-left: 18px;
+    gap: 8px;
+    background-color: var(--clr-dark);
+}
+
+.taskCard button {
+    background-color: #00000000;
+    outline: none;
+    border: none;
+    align-self: flex-start;
+}
+
+.taskCard button:hover {
+    color: color-mix(in srgb, currentColor 35%, transparent);
+}
+
+.taskCard .container {
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-left: 16px;
+}
+
+
+
+.taskCard input {
+     /* Add if not using autoprefixer */
+  -webkit-appearance: none;
+  /* Remove most all native input styles */
+  appearance: none;
+  /* For iOS < 15 */
+  background-color: var(black);
+  /* Not removed via appearance */
+  margin: 0;
+
+  font: inherit;
+  color: white;
+  width: 1.15em;
+  height: 1.15em;
+  border: 0.15em solid black;
+  border-radius: 50%;
+  transform: translateY(-0.075em);
+  transform: scale(1.5);
+
+  display: grid;
+  place-content: center;
+}
+
+body.darkmode .taskCard input {
+    border: 0.15em solid white;
+}
+
+.taskCard input::before {
+    content: "";
+    width: 0.65em;
+    height: 0.65em;
+    border-radius: 50%;
+    transform: scale(0);
+    transition: 120ms transform ease-in-out;
+    box-shadow: inset 1em 1em var(--clr-primary);
+    /* Windows High Contrast Mode */
+    background-color: CanvasText;
+    transform-origin: bottom left;
+    clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+}
+
+.taskCard input:checked::before {
+    transform: scale(1);
+}
 
 
 /* animations */

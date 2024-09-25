@@ -79,14 +79,17 @@ export function updateDisplay() {
 export function renderTaskObj(task) {
 
     const taskCard = document.createElement("div")
-    const radio = document.createElement("input")
+    const checkbox = document.createElement("input")
     const name = document.createElement("div")
     const description = document.createElement("div")
     const dueDate = document.createElement("div")
     const deleteBtn = document.createElement("button")
     const container = document.createElement("div")
+    const editBtn = document.createElement("button")
     const svgTrashCan = document.createElementNS("http://www.w3.org/2000/svg", "svg")
     const pathTrashCan = document.createElementNS('http://www.w3.org/2000/svg', 'path')
+    const svgEdit = document.createElementNS("http://www.w3.org/2000/svg", "svg")
+    const pathEdit = document.createElementNS('http://www.w3.org/2000/svg', 'path')
 
     svgTrashCan.setAttribute("class", "w-6 h-6 text-gray-800 dark:text-white")
     svgTrashCan.setAttribute("aria-hidden", "true")
@@ -104,16 +107,34 @@ export function renderTaskObj(task) {
 
     svgTrashCan.append(pathTrashCan)
 
+    svgEdit.setAttribute("class", "w-6 h-6 text-gray-800 dark:text-white")
+    svgEdit.setAttribute("aria-hidden", "true")
+    svgEdit.setAttribute("xmlns", "http://www.w3.org/2000/svg")
+    svgEdit.setAttribute("width", "24")
+    svgEdit.setAttribute("height", "24")
+    svgEdit.setAttribute("fill", "none")
+    svgEdit.setAttribute("viewbox", "0 0 24 24")
+
+    pathEdit.setAttribute("stroke", "currentColor")
+    pathEdit.setAttribute("stroke-linecap", "round")
+    pathEdit.setAttribute("stroke-linejoin", "round")
+    pathEdit.setAttribute("stroke-width", "2")
+    pathEdit.setAttribute("d", "m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z")
+
+    svgEdit.append(pathEdit)
+
+
     taskCard.classList.add("taskCard")
-    radio.setAttribute("type", "radio")
+    checkbox.setAttribute("type", "checkbox")
     name.textContent = task.name
     description.textContent = task.description
-    dueDate.textContent = task.dueDate
+    dueDate.textContent = "Due By " + task.dueDate
     deleteBtn.append(svgTrashCan)
+    editBtn.append(svgEdit)
     container.classList.add("container")
 
     if (task.isCompleted) {
-        radio.setAttribute("checked", "checked")
+        checkbox.setAttribute("checked", "checked")
     }
 
     switch (task.priority) {
@@ -129,13 +150,13 @@ export function renderTaskObj(task) {
     }
 
     container.append(name, description, dueDate)
-    taskCard.append(radio, container, deleteBtn)
+    taskCard.append(checkbox, container, editBtn, deleteBtn)
     tasks.append(taskCard)
 
     // event listeners
 
-    radio.addEventListener("click", () => {
-        toggleTaskCompletion(task, taskCard, radio)
+    checkbox.addEventListener("click", () => {
+        toggleTaskCompletion(task, taskCard, checkbox)
     })
 
     deleteBtn.addEventListener("click", () => {

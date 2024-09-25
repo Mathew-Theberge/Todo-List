@@ -1,12 +1,11 @@
-import { displayCurrentFolder, projectName, displayCompletedFolder, displayAllTasksFolder, updateDisplay,} from "./DOM-manipulation"
+import { displayCurrentFolder, projectName, displayCompletedFolder, displayAllTasksFolder} from "./DOM-manipulation"
 import { allFoldersArray } from "./folder-logic.js"
 import { updateStorage } from "./index.js"
 import { allTasksArray, updateTaskIds } from "./task-logic.js"
 
-export function toggleTaskCompletion(object, taskCard, radioBtn) {
+export function toggleTaskCompletion(object, taskCard) {
     if (object.isCompleted === true) {
         object.isCompleted = false
-        radioBtn.setAttribute("disabled", "disabled")
         addFastFadeAnimation(taskCard, displayCompletedFolder)
     } else {
         object.isCompleted = true
