@@ -22,6 +22,21 @@ import {
 } from "./DOM-manipulation.js"
 import { allFoldersArray } from "./folder-logic.js"
 
+// the below code is to fix a bug in firefox where clicking a select input closes the modal
+
+  let isSelectInputClickedInFirefox
+
+const prioritySelect = document.querySelector("#taskPriority")
+const folderSelect = document.querySelector("#projectFolder")
+
+folderSelect.addEventListener("click", () => {
+    isSelectInputClickedInFirefox = true
+})
+
+prioritySelect.addEventListener("click", () => {
+    isSelectInputClickedInFirefox = true
+})
+
 const taskDateInput = document.querySelector("#taskDueDate")
 
 const date = new Date()
@@ -61,7 +76,11 @@ export function updateStorage() {
  
 newTaskBtn.addEventListener("click", () => newTaskModal.showModal())
 newTaskModal.addEventListener("click", (e) => {
-    setTimeout( () => closeModalOnOutsideClick(e, newTaskModal, newTaskForm), 5) 
+    if (isSelectInputClickedInFirefox === true) {
+        isSelectInputClickedInFirefox = false
+    } else {
+        setTimeout( () => closeModalOnOutsideClick(e, newTaskModal, newTaskForm), 5) 
+    }
 })
 taskCancelBtn.addEventListener("click", () => exitModal(newTaskModal, newTaskForm))
 

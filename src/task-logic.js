@@ -41,8 +41,11 @@ class Task {
   }
 
   if (localStorage.length === 0) {
-    const defaultTask = new Task("Default Folder", "Default Name", "A basic description for the task", "2025-10-05", "high", false)
-    allTasksArray.push(defaultTask)
+    const defaultTask = new Task("Default Folder", "Create first task", "Use the first menu button to create a new task.", "2025-10-05", "high", false)
+    const darkMode = new Task("Default Folder", "Test Darkmode", "Click the button in the top right to toggle darkmode.", "2025-11-02", "moderate", false)
+    const basicFeatures = new Task("Default Folder", "Test basic features", "You can try creating new projects completeing or deleteing tasks.", "2025-11-24" ,"moderate", false)
+    const taskPriority = new Task("Default Folder", "Learn task priority", "Task cards are color coated based on level of priority.", "2025-12-25", "low", false)
+    allTasksArray.push(defaultTask, darkMode, basicFeatures, taskPriority)
 }
 
 

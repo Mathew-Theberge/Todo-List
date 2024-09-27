@@ -10,32 +10,33 @@
     <dialog id="newTaskModal">
         <form action="" id="newTaskForm">
             <h2>Create New Task</h2>
-            <div>
+            <div class="nameInputContainer">
+                <label for="taskName">Task Name</label>
+                <input type="text" name="task_name" id="taskName" required minlength="2" maxlength="25">
+            </div>
+            <div class="projectFolderInputContainer">
                 <label for="projectFolder">Project Folder</label>
                 <select name="project_folder" id="projectFolder">
                 </select>
             </div>
-            <div>
-                <label for="taskName">Task Name</label>
-                <input type="text" name="task_name" id="taskName" required minlength="2">
-            </div>
-            <div>
-                <label for="taskDescription">Description</label>
-                <input type="text" name="task_description" id="taskDescription">
-            </div>
-            <div>
+            <div class="dueDateInputContainer">
                 <label for="taskDueDate">Due Date</label>
                 <input type="date" name="task_due_date" id="taskDueDate" required max="2100-01-01">
             </div>
-            <div>
+            <div class="taskPriorityInputContainer">
                 <label for="taskPriority">Set Priority</label>
-                <select name="task_priority" id="taskPriority">
+                <select name="task_priority" id="taskPriority" required>
+                    <option disabled selected value>Select Priority</option>
                     <option value="high">High</option>
                     <option value="moderate">moderate</option>
                     <option value="low">Low</option>
                 </select>
             </div>
-            <button>Submit</button>
+            <div class="taskDescriptionInputContainer">
+                <label for="taskDescription">Description</label>
+                <textarea name="task_description" id="taskDescription" maxlength="100" rows="3"></textarea>
+            </div>
+            <button class="taskSubmitBtn">Submit</button>
             <button type="button" class="taskCancelBtn">Cancel</button>
         </form>
     </dialog>
@@ -43,11 +44,11 @@
     <dialog id="newProjectModal">
         <form action="" id="newProjectForm">
             <h2>Create New Project</h2>
-            <div>
+            <div class="projectNameInputContainer">
                 <label for="projectName">Project Name</label>
-                <input type="text" name="project_name" id="projectName" required maxlength="30">
+                <input type="text" name="project_name" id="projectName" required maxlength="25">
             </div>
-            <button>Submit</button>
+            <button class="projectSubmitBtn">Submit</button>
             <button type="button" class="projectCancelBtn">Cancel</button>
         </form>
     </dialog>
