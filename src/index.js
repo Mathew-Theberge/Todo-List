@@ -23,6 +23,7 @@ import {
     editTaskModal,
     editTaskDueDate,
     editTaskCancelBtn,
+    emptyFolderNewTaskBtn,
 } from "./DOM-manipulation.js"
 import { allFoldersArray } from "./folder-logic.js"
 import { updateTaskCard } from "./eventListener-logic.js"
@@ -116,6 +117,15 @@ newProjectModal.addEventListener("click", (e) => {
     setTimeout( () => closeModalOnOutsideClick(e, newProjectModal, newProjectForm), 5)
 })
 projectCancelBtn.addEventListener("click", () => exitModal(newProjectModal, newProjectForm))
+
+emptyFolderNewTaskBtn.addEventListener("click", () => newTaskModal.showModal())
+newTaskModal.addEventListener("click", (e) => {
+    if (isSelectInputClickedInFirefox === true) {
+        isSelectInputClickedInFirefox = false
+    } else {
+        setTimeout( () => closeModalOnOutsideClick(e, newTaskModal, newTaskForm), 5) 
+    }
+})
 
 
 newTaskForm.addEventListener("submit", (e) => {

@@ -43,10 +43,11 @@ export class Task {
 
   if (localStorage.length === 0) {
     const defaultTask = new Task("Default Folder", "Create first task", "Use the first menu button to create a new task.", "2025-10-05", "high", 0, "false")
-    const darkMode = new Task("Default Folder", "Test Darkmode", "Click the button in the top right to toggle darkmode.", "2025-11-02", "moderate", 1, "false")
+    const darkMode = new Task("Default Folder", "Test Darkmode", "Click the button in the top right to toggle darkmode.", "2025-11-02", "low", 1, "false")
     const basicFeatures = new Task("Default Folder", "Test basic features", "You can try creating new projects completeing or deleteing tasks.", "2025-11-24" ,"moderate", 2, "false")
     const taskPriority = new Task("Default Folder", "Learn task priority", "Task cards are color coated based on level of priority.", "2025-12-25", "low", 3, "false")
-    allTasksArray.push(defaultTask, darkMode, basicFeatures, taskPriority)
+    const editMe = new Task("Default Folder", "Edit Me", "click the edit icon to change any of my properties even my folder location", "2026-01-01", "moderate", 4, "false")
+    allTasksArray.push(defaultTask, darkMode, taskPriority, basicFeatures, editMe)
 }
 
 

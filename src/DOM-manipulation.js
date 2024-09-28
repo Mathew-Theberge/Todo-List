@@ -28,6 +28,7 @@ export const high = document.querySelector("#high")
 export const moderate = document.querySelector("#moderate")
 export const low = document.querySelector("#low")
 export const editTaskCancelBtn = document.querySelector("#editTaskCancelBtn")
+export const emptyFolderNewTaskBtn = document.querySelector(".emptyFolderNewTaskBtn")
 
 export function displayCompletedFolder() {
     tasks.replaceChildren()
@@ -64,7 +65,15 @@ export function displayCurrentFolder(folderName) {
     filteredTasks.forEach((task) => renderTaskObj(task))
     projectName.textContent = folderName
     highlightFolder(folderName)
-    console.log(allTasksArray)
+    console.log(filteredTasks)
+    if (filteredTasks.length === 0) {
+        tasks.append(emptyFolderNewTaskBtn)
+    }
+}
+
+function displayNewTaskBtn() {
+    
+
 }
 
 function highlightFolder(folderName) {
@@ -87,7 +96,6 @@ export function updateDisplay() {
 
 
 export function renderTaskObj(task) {
-    console.log(task)
     const taskCard = document.createElement("div")
     const checkbox = document.createElement("input")
     const name = document.createElement("div")

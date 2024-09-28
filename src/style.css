@@ -217,17 +217,6 @@ a {
     color: black;
 }
 
-#sidebar .newTaskBtn,
-#sidebar .newProjectBtn {
-    color: #ffffff;
-    background-color: var(--clr-secondary);
-}
-
-#sidebar .newTaskBtn:hover,
-#sidebar .newProjectBtn:hover {
-    color: #80ff80;
-    background-color: var(--clr-secondary-semi-transparent);
-}
 
 .folderContainer :last-child:hover {
     color: color-mix(in srgb, currentColor 65%, transparent);
@@ -687,4 +676,87 @@ body.darkmode input {
 
 .cancel.btn-42:before {
     border: var(--thickness) solid #ff5050cc !important;
+}
+
+.btn-42.projectSubmitBtn {
+    padding: 0.75rem 2.25rem;
+}
+
+.btn-42.projectCancelBtn {
+    padding: 0.75rem 2.25rem;
+}
+
+.emptyFolderNewTaskBtn {
+    color: #fff;
+    padding: 5px 10px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    outline: none;
+    border-radius: 5px;
+    z-index: 0;
+    background: white;
+    overflow: hidden;
+    border: 2px dashed var(--clr-primary);
+    color: var(--clr-primary);
+    grid-column: 1/3;
+    justify-content: center;
+    justify-self: center;
+    padding: 1rem 3rem;
+    width: calc(clamp(280px, 50%, 600px));
+    height: 110%;
+    margin-right: 16px;
+    margin-top: 16px;
+    font-size: 2rem;
+}
+
+body.darkmode .emptyFolderNewTaskBtn {
+    background-color: var(--clr-dark);
+}
+
+.emptyFolderNewTaskBtn svg {
+    transform: scale(1.5);
+    margin-right: 0.5rem;
+}
+
+.emptyFolderNewTaskBtn:hover {
+    color: #fff;
+}
+
+.emptyFolderNewTaskBtn::after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    transition: all 0.3s ease;
+    left: 0;
+    top: 0;
+    width: 0;
+    height: 100%;
+    background: var(--clr-primary);
+}
+
+.emptyFolderNewTaskBtn:hover::after {
+    width: 100%;
+}
+
+#sidebar .newProjectBtn,
+#sidebar .newTaskBtn {
+    height: 44px;
+    width: 196px;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    outline: none;
+    border-radius: 6px;
+    border: 2px solid #2c0b8e;
+    background: #2c0b8e;
+}
+
+#sidebar .newTaskBtn:hover,
+#sidebar .newProjectBtn:hover {
+    background: #fff;
+    color: #2c0b8e
 }
