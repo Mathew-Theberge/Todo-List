@@ -29,6 +29,7 @@ export const moderate = document.querySelector("#moderate")
 export const low = document.querySelector("#low")
 export const editTaskCancelBtn = document.querySelector("#editTaskCancelBtn")
 export const emptyFolderNewTaskBtn = document.querySelector(".emptyFolderNewTaskBtn")
+export const para = document.querySelector(".para")
 
 export function displayCompletedFolder() {
     tasks.replaceChildren()
@@ -42,12 +43,15 @@ export function displayCompletedFolder() {
     })
     allTasksBtn.classList.remove("active")
     completedBtn.classList.add("active")
+    if (filteredTasks.length === 0) {
+        tasks.append(para)
+    }
 }
 
 export function displayAllTasksFolder() {
     tasks.replaceChildren()
     allTasksArray.forEach((task) => {
-        if (task.folder !== "Completed" && task.isCompleted === "false") {renderTaskObj(task)}
+        if (task.isCompleted === "false") {renderTaskObj(task)}
     })
     projectName.textContent = "All Tasks"
     folders.childNodes.forEach((node) => {
@@ -55,6 +59,11 @@ export function displayAllTasksFolder() {
     })
     completedBtn.classList.remove("active")
     allTasksBtn.classList.add("active")
+    if (allTasksArray.every((task) => {
+        return task.isCompleted !== "false"
+    })) {
+        tasks.append(emptyFolderNewTaskBtn)
+    }
 }
 
 export function displayCurrentFolder(folderName) {
@@ -65,15 +74,9 @@ export function displayCurrentFolder(folderName) {
     filteredTasks.forEach((task) => renderTaskObj(task))
     projectName.textContent = folderName
     highlightFolder(folderName)
-    console.log(filteredTasks)
     if (filteredTasks.length === 0) {
         tasks.append(emptyFolderNewTaskBtn)
     }
-}
-
-function displayNewTaskBtn() {
-    
-
 }
 
 function highlightFolder(folderName) {
@@ -261,8 +264,7 @@ export function renderFolderBtns(manualCallback = false) {
 
         deleteBtn.addEventListener("click", () => {
             if (allFoldersArray.length > 1) {
-                deleteFolder(folder.name)
-                container.remove()
+                deleteFolder(folder.name, container)
                 folderOption.remove()
             }
         })

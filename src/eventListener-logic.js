@@ -40,11 +40,14 @@ function addFadeAnimation(taskCard, func, arg = null) {
         }, 600)
 }
 
-function addFastFadeAnimation(taskCard, func, arg = null) {
+function addFastFadeAnimation(taskCard, func, arg = null, deleteObj = null) {
     taskCard.classList.add("hidden250")
     document.body.style.pointerEvents = "none"
     setTimeout(() => {
         func(arg)
+        if (deleteObj !== null) {
+            deleteObj.remove()
+        }
         document.body.style.pointerEvents = "auto"
     }, 250)
 }
@@ -64,7 +67,7 @@ export function deleteCard(object, taskCard) {
     updateStorage()
 }
 
-export function deleteFolder(folderName) {
+export function deleteFolder(folderName, container) {
     const filteredFoldersArray = allFoldersArray.filter(folder => folder.name !== folderName)
     allFoldersArray.length = 0
     filteredFoldersArray.forEach((item) => allFoldersArray.push(item))
@@ -74,11 +77,11 @@ export function deleteFolder(folderName) {
     filteredTasksArray.forEach((item) => allTasksArray.push(item))
     updateTaskIds()
     if (projectName.textContent === "Completed") {
-        displayCompletedFolder()
+        addFastFadeAnimation(container, displayCompletedFolder, null, container)
     } else if (projectName.textContent === "All Tasks") {
-        displayAllTasksFolder()
+        addFastFadeAnimation(container, displayAllTasksFolder, null , container)
     } else {
-        displayCurrentFolder(allFoldersArray[allFoldersArray.length -1].name)
+        addFastFadeAnimation(container, displayCurrentFolder, allFoldersArray[allFoldersArray.length -1].name, container)
     }
     updateStorage()
 }
