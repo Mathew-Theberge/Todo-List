@@ -1,14 +1,27 @@
-import { displayCurrentFolder, projectName, displayCompletedFolder, displayAllTasksFolder} from "./DOM-manipulation"
+import { 
+    displayCurrentFolder, 
+    projectName, 
+    displayCompletedFolder, 
+    displayAllTasksFolder,
+    editTaskModal,
+    editTaskForm,
+    editDescription,
+    editNameInput,
+    editTaskDueDate,
+    high,
+    moderate,
+    low
+} from "./DOM-manipulation"
 import { allFoldersArray } from "./folder-logic.js"
 import { updateStorage } from "./index.js"
-import { allTasksArray, updateTaskIds } from "./task-logic.js"
+import { allTasksArray, updateTaskIds , Task} from "./task-logic.js"
 
 export function toggleTaskCompletion(object, taskCard) {
-    if (object.isCompleted === true) {
-        object.isCompleted = false
+    if (object.isCompleted === "true") {
+        object.isCompleted = "false"
         addFastFadeAnimation(taskCard, displayCompletedFolder)
     } else {
-        object.isCompleted = true
+        object.isCompleted = "true"
         if (projectName.textContent === "All Tasks") {
             addFadeAnimation(taskCard, displayAllTasksFolder)
         } else {
@@ -68,4 +81,60 @@ export function deleteFolder(folderName) {
         displayCurrentFolder(allFoldersArray[allFoldersArray.length -1].name)
     }
     updateStorage()
+}
+
+const isComplete = document.querySelector("#isComplete")
+const taskID = document.querySelector("#taskID")
+
+
+export function editTask(task) {
+    editNameInput.setAttribute("value", task.name)
+    editDescription.textContent = task.description
+    editTaskDueDate.setAttribute("value", task.dueDate)
+    switch (task.priority) {
+        case "high":
+            high.removeAttribute("selected")
+            moderate.removeAttribute("selected")
+            low.removeAttribute("selected")
+            high.setAttribute("selected", "")
+            break
+        case "moderate":
+            high.removeAttribute("selected")
+            moderate.removeAttribute("selected")
+            low.removeAttribute("selected")
+            moderate.setAttribute("selected", "")
+            break
+        case "low":
+            high.removeAttribute("selected")
+            moderate.removeAttribute("selected")
+            low.removeAttribute("selected")
+            low.setAttribute("selected", "")
+            break
+    }
+    const option = document.querySelectorAll(`option[value="${task.folder}"]`)
+    const options = document.querySelectorAll("#changeProjectFolder option")
+    options.forEach(option => option.removeAttribute("selected"))
+    option[1].setAttribute("selected", "")
+    isComplete.setAttribute("value", task.isCompleted)
+    taskID.setAttribute("value", task.id)
+    editNameInput.setSelectionRange(editNameInput.value.length, editNameInput.value.length)
+    editTaskModal.showModal()
+}
+
+export function updateTaskCard() {
+    const formData = new FormData(editTaskForm)
+	const formDataObj = Object.fromEntries(formData)
+    const task = new Task(
+        formDataObj.change_project_folder,
+        formDataObj.edit_task_name,
+        formDataObj.edit_task_description,
+        formDataObj.edit_task_due_date,
+        formDataObj.change_task_priority,
+        formDataObj.task_id,
+        formDataObj.is_complete
+    )
+    allTasksArray.splice(task.id, 1, task)
+    updateTaskIds()
+    updateStorage()
+    return task.folder
 }

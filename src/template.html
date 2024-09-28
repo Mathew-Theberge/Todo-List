@@ -36,8 +36,45 @@
                 <label for="taskDescription">Description</label>
                 <textarea name="task_description" id="taskDescription" maxlength="100" rows="3"></textarea>
             </div>
-            <button class="taskSubmitBtn">Submit</button>
-            <button type="button" class="taskCancelBtn">Cancel</button>
+            <button class="taskSubmitBtn btn-42">Submit</button>
+            <button type="button" class="taskCancelBtn btn-42 cancel">Cancel</button>
+        </form>
+    </dialog>
+
+    <dialog id="editTaskModal">
+        <form action="" id="editTaskForm">
+            <h2>Edit Task</h2>
+            <div class="nameInputContainer">
+                <label for="editTaskName">Edit Task Name</label>
+                <input type="text" name="edit_task_name" id="editTaskName" required minlength="2" maxlength="25">
+            </div>
+            <div class="projectFolderInputContainer">
+                <label for="changeProjectFolder">Change Project Folder</label>
+                <select name="change_project_folder" id="changeProjectFolder">
+                </select>
+            </div>
+            <div class="dueDateInputContainer">
+                <label for="editTaskDueDate">Edit Due Date</label>
+                <input type="date" name="edit_task_due_date" id="editTaskDueDate" required max="2100-01-01">
+            </div>
+            <div class="taskPriorityInputContainer">
+                <label for="changeTaskPriority">Change Priority</label>
+                <select name="change_task_priority" id="changeTaskPriority" required>
+                    <option disabled selected value>Select Priority</option>
+                    <option value="high" id="high">High</option>
+                    <option value="moderate" id="moderate">moderate</option>
+                    <option value="low" id="low">Low</option>
+                </select>
+            </div>
+            <div class="taskDescriptionInputContainer">
+                <label for="editTaskDescription">Description</label>
+                <textarea name="edit_task_description" id="editTaskDescription" maxlength="100" rows="3"></textarea>
+            </div>
+            <button class="taskSubmitBtn btn-42" id="editTaskSubmitBtn">Submit</button>
+            <button type="button" class="taskCancelBtn btn-42 cancel" id="editTaskCancelBtn">Cancel</button>
+
+            <input type="hidden" name="task_id" id="taskID">
+            <input type="hidden" name="is_complete" id="isComplete">
         </form>
     </dialog>
 
@@ -48,8 +85,8 @@
                 <label for="projectName">Project Name</label>
                 <input type="text" name="project_name" id="projectName" required maxlength="25">
             </div>
-            <button class="projectSubmitBtn">Submit</button>
-            <button type="button" class="projectCancelBtn">Cancel</button>
+            <button class="projectSubmitBtn btn-42">Submit</button>
+            <button type="button" class="projectCancelBtn btn-42 cancel">Cancel</button>
         </form>
     </dialog>
 
@@ -105,7 +142,6 @@
 
         </div>
     </div>
-
 </body>
 </html>
   

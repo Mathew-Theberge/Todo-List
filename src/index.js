@@ -19,21 +19,37 @@ import {
     displayCompletedFolder,
     displayAllTasksFolder,
     displayCurrentFolder,
+    editTaskForm,
+    editTaskModal,
+    editTaskDueDate,
+    editTaskCancelBtn,
 } from "./DOM-manipulation.js"
 import { allFoldersArray } from "./folder-logic.js"
+import { updateTaskCard } from "./eventListener-logic.js"
 
 // the below code is to fix a bug in firefox where clicking a select input closes the modal
 
   let isSelectInputClickedInFirefox
 
+
 const prioritySelect = document.querySelector("#taskPriority")
 const folderSelect = document.querySelector("#projectFolder")
+const editFolderSelect = document.querySelector("#changeProjectFolder")
+const editPrioritySelect = document.querySelector("#changeTaskPriority")
 
 folderSelect.addEventListener("click", () => {
     isSelectInputClickedInFirefox = true
 })
 
 prioritySelect.addEventListener("click", () => {
+    isSelectInputClickedInFirefox = true
+})
+
+editFolderSelect.addEventListener("click", () => {
+    isSelectInputClickedInFirefox = true
+})
+
+editPrioritySelect.addEventListener("click", () => {
     isSelectInputClickedInFirefox = true
 })
 
@@ -47,6 +63,7 @@ let year = date.getFullYear()
 let currentDate = `${year}-${month}-${day}`
 
 taskDateInput.setAttribute("min", currentDate)
+editTaskDueDate.setAttribute("min", currentDate)
 
 if (localStorage.length === 0) {
     renderFolderBtns(true)
@@ -72,6 +89,15 @@ export function updateStorage() {
     localStorage.setItem("taskArray", JSON.stringify(allTasksArray))
     localStorage.setItem("folderArray", JSON.stringify(allFoldersArray))
 }
+
+editTaskModal.addEventListener("click", (e) => {
+    if (isSelectInputClickedInFirefox === true) {
+        isSelectInputClickedInFirefox = false
+    } else {
+        setTimeout( () => closeModalOnOutsideClick(e, editTaskModal, editTaskForm), 5) 
+    }
+})
+editTaskCancelBtn.addEventListener("click", () => exitModal(editTaskModal, editTaskForm))
 
  
 newTaskBtn.addEventListener("click", () => newTaskModal.showModal())
@@ -103,6 +129,13 @@ newProjectForm.addEventListener("submit", (e) => {
     e.preventDefault()
     renderFolderBtns()
     exitModal(newProjectModal, newProjectForm)
+})
+
+editTaskForm.addEventListener("submit", (e) => {
+    e.preventDefault()
+    const folderName = updateTaskCard()
+    displayCurrentFolder(folderName)
+    exitModal(editTaskModal, editTaskForm)
 })
 
 allTasksBtn.addEventListener("click", () => displayAllTasksFolder())

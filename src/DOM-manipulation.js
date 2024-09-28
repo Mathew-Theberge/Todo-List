@@ -1,6 +1,6 @@
 import {allTasksArray} from "./task-logic.js"
 import { createFolderObj, allFoldersArray} from "./folder-logic.js"
-import { toggleTaskCompletion, deleteCard, deleteFolder} from "./eventListener-logic.js"
+import { toggleTaskCompletion, deleteCard, deleteFolder, editTask} from "./eventListener-logic.js"
 
 export const newTaskBtn = document.querySelector(".newTaskBtn")
 export const newTaskModal = document.querySelector("#newTaskModal")
@@ -18,12 +18,21 @@ export const projectName = document.querySelector(".projectName")
 export const folders = document.querySelector(".folders")
 export const tasks = document.querySelector(".tasks")
 export const projectFolder = document.querySelector("#projectFolder")
-
+export const editTaskModal = document.querySelector("#editTaskModal")
+export const editTaskForm = document.querySelector("#editTaskForm")
+export const changeProjectFolder = document.querySelector("#changeProjectFolder")
+export const editTaskDueDate = document.querySelector("#editTaskDueDate")
+export const editNameInput = document.querySelector("#editTaskName")
+export const editDescription = document.querySelector("#editTaskDescription")
+export const high = document.querySelector("#high")
+export const moderate = document.querySelector("#moderate")
+export const low = document.querySelector("#low")
+export const editTaskCancelBtn = document.querySelector("#editTaskCancelBtn")
 
 export function displayCompletedFolder() {
     tasks.replaceChildren()
     const filteredTasks = allTasksArray.filter((taskCard) => {
-        if (true === taskCard.isCompleted) {return taskCard}
+        if ("true" === taskCard.isCompleted) {return taskCard}
     })
     filteredTasks.forEach((task) => renderTaskObj(task))
     projectName.textContent = "Completed"
@@ -37,7 +46,7 @@ export function displayCompletedFolder() {
 export function displayAllTasksFolder() {
     tasks.replaceChildren()
     allTasksArray.forEach((task) => {
-        if (task.folder !== "Completed" && task.isCompleted === false) {renderTaskObj(task)}
+        if (task.folder !== "Completed" && task.isCompleted === "false") {renderTaskObj(task)}
     })
     projectName.textContent = "All Tasks"
     folders.childNodes.forEach((node) => {
@@ -50,11 +59,12 @@ export function displayAllTasksFolder() {
 export function displayCurrentFolder(folderName) {
     tasks.replaceChildren()
     const filteredTasks = allTasksArray.filter((taskCard) => {
-        if (folderName === taskCard.folder && taskCard.isCompleted === false) {return taskCard}
+        if (folderName === taskCard.folder && taskCard.isCompleted === "false") {return taskCard}
     })
     filteredTasks.forEach((task) => renderTaskObj(task))
     projectName.textContent = folderName
     highlightFolder(folderName)
+    console.log(allTasksArray)
 }
 
 function highlightFolder(folderName) {
@@ -77,7 +87,7 @@ export function updateDisplay() {
 
 
 export function renderTaskObj(task) {
-
+    console.log(task)
     const taskCard = document.createElement("div")
     const checkbox = document.createElement("input")
     const name = document.createElement("div")
@@ -133,7 +143,7 @@ export function renderTaskObj(task) {
     editBtn.append(svgEdit)
     container.classList.add("container")
 
-    if (task.isCompleted) {
+    if (task.isCompleted === "true") {
         checkbox.setAttribute("checked", "checked")
     }
 
@@ -163,18 +173,27 @@ export function renderTaskObj(task) {
         deleteCard(task, taskCard)
     })
 
+    editBtn.addEventListener("click", () => {
+        if (task.isCompleted !== "true") {
+            editTask(task)
+        } else {
+            alert("Cannot edit completed tasks")
+        }
+    })
 }
 
 export function renderFolderBtns(manualCallback = false) {
 
     folders.replaceChildren()
     projectFolder.replaceChildren()
+    changeProjectFolder.replaceChildren()
     if (manualCallback === false) {createFolderObj()}
     allFoldersArray.forEach( (folder) => {
         const container = document.createElement("div")
         const projectBtn = document.createElement("button")
         const deleteBtn = document.createElement("button")
         const folderOption = document.createElement("option")
+        const changeFolderOption = document.createElement("option")
         const svgFolder = document.createElementNS("http://www.w3.org/2000/svg", "svg")
         const pathFolder = document.createElementNS('http://www.w3.org/2000/svg', 'path')
         const svgTrashCan = document.createElementNS("http://www.w3.org/2000/svg", "svg")
@@ -215,11 +234,15 @@ export function renderFolderBtns(manualCallback = false) {
         const removedSpaces = folder.name.replace(/ /g, "")
         projectBtn.classList.add(removedSpaces)
         folderOption.textContent = folder.name
+        
+        changeFolderOption.textContent = folder.name
+        changeFolderOption.setAttribute("value", folder.name)
         folderOption.setAttribute("value", folder.name)
     
         container.append(projectBtn, deleteBtn)
         folders.append(container)
         projectFolder.append(folderOption)
+        changeProjectFolder.append(changeFolderOption)
         displayCurrentFolder(folder.name)
 
         // event listeners
