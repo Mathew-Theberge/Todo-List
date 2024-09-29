@@ -125,8 +125,18 @@ editTaskModal.addEventListener("click", (e) => {
         setTimeout( () => closeModalOnOutsideClick(e, editTaskModal, editTaskForm), 5) 
     }
 })
-editTaskCancelBtn.addEventListener("click", () => exitModal(editTaskModal, editTaskForm))
-
+editTaskCancelBtn.addEventListener("click", () => {
+    const dialogs = document.querySelectorAll("dialog")
+    dialogs.forEach((dialog) => {
+        dialog.classList.add("dialogClose")
+    })
+    setTimeout(() => {
+        exitModal(editTaskModal, editTaskForm)
+        dialogs.forEach((dialog) => {
+            dialog.classList.remove("dialogClose")
+        })
+    }, 300);
+})
  
 newTaskBtn.addEventListener("click", () => newTaskModal.showModal())
 newTaskModal.addEventListener("click", (e) => {
@@ -136,14 +146,35 @@ newTaskModal.addEventListener("click", (e) => {
         setTimeout( () => closeModalOnOutsideClick(e, newTaskModal, newTaskForm), 5) 
     }
 })
-taskCancelBtn.addEventListener("click", () => exitModal(newTaskModal, newTaskForm))
-
+taskCancelBtn.addEventListener("click", () => {
+    const dialogs = document.querySelectorAll("dialog")
+    dialogs.forEach((dialog) => {
+        dialog.classList.add("dialogClose")
+    })
+    setTimeout(() => {
+        exitModal(newTaskModal, newTaskForm)
+        dialogs.forEach((dialog) => {
+            dialog.classList.remove("dialogClose")
+        })
+    }, 300);
+})
 
 newProjectBtn.addEventListener("click", () => newProjectModal.showModal())
 newProjectModal.addEventListener("click", (e) => {
     setTimeout( () => closeModalOnOutsideClick(e, newProjectModal, newProjectForm), 5)
 })
-projectCancelBtn.addEventListener("click", () => exitModal(newProjectModal, newProjectForm))
+projectCancelBtn.addEventListener("click", () => {
+    const dialogs = document.querySelectorAll("dialog")
+    dialogs.forEach((dialog) => {
+        dialog.classList.add("dialogClose")
+    })
+    setTimeout(() => {
+        exitModal(newProjectModal, newProjectForm)
+        dialogs.forEach((dialog) => {
+            dialog.classList.remove("dialogClose")
+        })
+    }, 300);
+})
 
 emptyFolderNewTaskBtn.addEventListener("click", () => newTaskModal.showModal())
 
