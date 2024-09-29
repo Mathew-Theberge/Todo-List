@@ -37,9 +37,7 @@ input {
     --clr-text: #111827;
     --clr-dark: #e2e2e2;
     --clr-primary: #fa9639;
-    --clr-secondary:#5b4fff;
     --clr-primary-semi-transparent:#fa963942;
-    --clr-secondary-semi-transparent:#5b4fffc0;
     --clr-toggle-shade: black;
     --clr-accent: #f3f3f3;
     --rotateIcon: 180deg;
@@ -51,9 +49,7 @@ input {
     --clr-text: #d7dce6;
     --clr-dark: #111827;
     --clr-primary: #bdadfd;
-    --clr-secondary: #00758a;
     --clr-primary-semi-transparent:#bdadfd42;
-    --clr-secondary-semi-transparent:#00758ab4;
     --clr-toggle-shade: rgb(234, 226, 255);
     --clr-accent: #1f2937;
     --rotateIcon: 0deg;
@@ -163,6 +159,7 @@ body.darkmode .low {
     padding: 1rem;
     align-items: center;
     overflow-y: auto;
+    transition: margin 0.3s ease;
 }
 
 
@@ -297,13 +294,14 @@ body.darkmode .folderContainer button {
     background-image: var(--header-image);
 }
 
-.darkModeToggle {
+.darkModeToggle,
+.toggleSidebarBtn {
     width: 40px;
     height: 40px;
-    align-self: flex-end;
     background-color: #00000000;
     border: var(--clr-toggle-shade) solid 3px;
     border-radius: 8px;
+    transition: margin 0.3s ease;
 }
 
 #header button svg {
@@ -325,6 +323,20 @@ body.darkmode .folderContainer button {
     font-weight: 900;
     margin-top: auto;
     margin-bottom: 3px;
+}
+
+.headerBtnContainer {
+    display: flex;
+    gap: 1rem;
+    align-self: flex-end;
+    margin: 0 !important;
+}
+
+.toggleSidebarBtn:hover,
+.darkModeToggle:hover {
+    background-color: var(--clr-primary);
+    border: var(--clr-toggle-shade) 3px solid;
+    margin-top: -2px !important;
 }
 
 /* content body / card section styling */
@@ -590,7 +602,7 @@ body.darkmode input {
 .hidden600 {
     visibility: hidden;
     opacity: 0;
-    transition: visibility 0s 0.6s, opacity 0.6s ease-in-out;
+    transition: visibility 0s 0.6s, opacity 0.6s ease-in-out !important;
   }
 
 .hidden250 {
@@ -773,3 +785,70 @@ body.darkmode .emptyFolderNewTaskBtn {
     font-size: 2rem;
     text-align: center;
 }
+
+.taskCard {
+    transition: all 0.3s ease;
+}
+
+.taskCard:hover {
+   margin-top: -2px;
+   margin-bottom: 2px;
+}
+
+/* css for toggling sidebar */
+
+.toggleSidebar {
+    margin-left: -250px;
+}
+
+@keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+  }
+  
+  @keyframes slide-up {
+    from {
+      transform: translateY(10%);
+    }
+  }
+
+  @keyframes fade-out {
+    from {
+      opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+  }
+  
+  @keyframes slide-down {
+    from {
+      transform: translateY(0);
+    }
+    to {
+        transform: translateY(10%)
+    }
+  }
+
+  .dialogClose {
+    animation: fade-out 300ms 150ms both, slide-down 300ms 150ms both;
+  }
+  
+  dialog {
+    animation: fade-in 400ms 200ms both, slide-up 400ms 200ms both;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .dialog-overlay,
+    .dialog-content {
+      animation: none;
+    }
+  }
+
+
+
+
+
+
+

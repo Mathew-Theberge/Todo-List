@@ -24,6 +24,8 @@ import {
     editTaskDueDate,
     editTaskCancelBtn,
     emptyFolderNewTaskBtn,
+    toggleSidebarBtn,
+    sidebar,
 } from "./DOM-manipulation.js"
 import { allFoldersArray } from "./folder-logic.js"
 import { updateTaskCard } from "./eventListener-logic.js"
@@ -65,6 +67,31 @@ let currentDate = `${year}-${month}-${day}`
 
 taskDateInput.setAttribute("min", currentDate)
 editTaskDueDate.setAttribute("min", currentDate)
+
+export function formatDate(dateString) {
+    const arrayOfMonths = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+    let newMonth = dateString.slice(5, 7) - 1
+    let newDay = dateString.slice(8, 10)
+    if (newDay[0] === "0") {
+        newDay = newDay.slice(1, 2)
+    }
+
+    switch (newDay[newDay.length - 1]) {
+        case "1":
+            newDay += "st"
+            break
+        case "2":
+            newDay += "nd"
+            break
+        case "3":
+            newDay += "rd"
+            break
+        default:
+            newDay += "th"
+    }
+    let newYear = dateString.slice(0, 4)
+    return `${arrayOfMonths[newMonth]}  ${newDay} ${newYear}`
+}
 
 if (localStorage.length === 0) {
     renderFolderBtns(true)
@@ -119,35 +146,61 @@ newProjectModal.addEventListener("click", (e) => {
 projectCancelBtn.addEventListener("click", () => exitModal(newProjectModal, newProjectForm))
 
 emptyFolderNewTaskBtn.addEventListener("click", () => newTaskModal.showModal())
-newTaskModal.addEventListener("click", (e) => {
-    if (isSelectInputClickedInFirefox === true) {
-        isSelectInputClickedInFirefox = false
-    } else {
-        setTimeout( () => closeModalOnOutsideClick(e, newTaskModal, newTaskForm), 5) 
-    }
-})
+
 
 
 newTaskForm.addEventListener("submit", (e) => {
     e.preventDefault()
+    const dialogs = document.querySelectorAll("dialog")
+    dialogs.forEach((dialog) => {
+        dialog.classList.add("dialogClose")
+    })
+    setTimeout(() => {
+        exitModal(newTaskModal, newTaskForm)
+        dialogs.forEach((dialog) => {
+            dialog.classList.remove("dialogClose")
+        })
+    }, 300);
     createTaskObj()
     updateDisplay()
-    exitModal(newTaskModal, newTaskForm)
 })
 
 newProjectForm.addEventListener("submit", (e) => {
     e.preventDefault()
+    const dialogs = document.querySelectorAll("dialog")
+    dialogs.forEach((dialog) => {
+        dialog.classList.add("dialogClose")
+    })
+    setTimeout(() => {
+        exitModal(newProjectModal, newProjectForm)
+        dialogs.forEach((dialog) => {
+            dialog.classList.remove("dialogClose")
+        })
+    }, 300);
     renderFolderBtns()
-    exitModal(newProjectModal, newProjectForm)
 })
 
 editTaskForm.addEventListener("submit", (e) => {
     e.preventDefault()
+    const dialogs = document.querySelectorAll("dialog")
+    dialogs.forEach((dialog) => {
+        dialog.classList.add("dialogClose")
+    })
+    setTimeout(() => {
+        exitModal(editTaskModal, editTaskForm)
+        dialogs.forEach((dialog) => {
+            dialog.classList.remove("dialogClose")
+        })
+    }, 300);
     const folderName = updateTaskCard()
     displayCurrentFolder(folderName)
-    exitModal(editTaskModal, editTaskForm)
 })
 
 allTasksBtn.addEventListener("click", () => displayAllTasksFolder())
 
 completedBtn.addEventListener("click", () => displayCompletedFolder())
+
+toggleSidebarBtn.addEventListener("click", () => {
+    sidebar.classList.toggle("toggleSidebar")
+})
+

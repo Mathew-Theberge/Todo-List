@@ -57,7 +57,7 @@ export function deleteCard(object, taskCard) {
 
     allTasksArray.splice(object.id, 1)
     updateTaskIds()
-    if (object.isCompleted === true) {
+    if (object.isCompleted === "true") {
         addFastFadeAnimation(taskCard, displayCompletedFolder)
     } else if (projectName.textContent === "All Tasks") {
         addFastFadeAnimation(taskCard, displayAllTasksFolder)

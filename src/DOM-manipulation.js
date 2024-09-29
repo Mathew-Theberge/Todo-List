@@ -1,6 +1,7 @@
 import {allTasksArray} from "./task-logic.js"
 import { createFolderObj, allFoldersArray} from "./folder-logic.js"
 import { toggleTaskCompletion, deleteCard, deleteFolder, editTask} from "./eventListener-logic.js"
+import { formatDate } from "./index.js"
 
 export const newTaskBtn = document.querySelector(".newTaskBtn")
 export const newTaskModal = document.querySelector("#newTaskModal")
@@ -30,6 +31,7 @@ export const low = document.querySelector("#low")
 export const editTaskCancelBtn = document.querySelector("#editTaskCancelBtn")
 export const emptyFolderNewTaskBtn = document.querySelector(".emptyFolderNewTaskBtn")
 export const para = document.querySelector(".para")
+export const toggleSidebarBtn = document.querySelector(".toggleSidebarBtn")
 
 export function displayCompletedFolder() {
     tasks.replaceChildren()
@@ -149,7 +151,7 @@ export function renderTaskObj(task) {
     checkbox.setAttribute("type", "checkbox")
     name.textContent = task.name
     description.textContent = task.description
-    dueDate.textContent = "Due By " + task.dueDate
+    dueDate.textContent = "Due By " + formatDate(task.dueDate)
     deleteBtn.append(svgTrashCan)
     editBtn.append(svgEdit)
     container.classList.add("container")
@@ -280,7 +282,16 @@ export function closeModalOnOutsideClick(e, modal, form) {
       e.clientY < dialogDimensions.top ||
       e.clientY > dialogDimensions.bottom
     ) {
-    exitModal(modal, form)
+    const dialogs = document.querySelectorAll("dialog")
+    dialogs.forEach((dialog) => {
+        dialog.classList.add("dialogClose")
+    })
+    setTimeout(() => {
+        exitModal(modal, form)
+        dialogs.forEach((dialog) => {
+            dialog.classList.remove("dialogClose")
+        })
+    }, 300);
     }
 }
 
